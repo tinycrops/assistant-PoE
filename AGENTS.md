@@ -122,6 +122,7 @@ python3 observability_viewer.py --host 0.0.0.0 --port 5051
 ## Notes
 - Market pricing is strongest for currency, uniques, and divination cards.
 - Rare-crafted gear still needs manual trade checks.
+- For item swap DPS proofs, use `skills/pob-skill-damage-item-compare` to compare how a candidate item changes a selected skill's damage metrics in headless PoB.
 - Keep `POESESSID` and webhook secrets out of committed files.
 - Use environment variables for secrets (`OPENAI_API_KEY`, `DISCORD_WEBHOOK_URL`); do not pass secrets in command history when avoidable.
 - Publish history path (default): `logs/discord_publish_history.jsonl`

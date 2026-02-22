@@ -1,0 +1,4 @@
+interface:
+  display_name: "PoB Skill Damage Compare"
+  short_description: "Compare item swap impact on selected skill DPS in PoB."
+  default_prompt: "Compare how swapping one equipped item changes damage metrics for a chosen skill using headless Path of Building and a candidate item text paste."

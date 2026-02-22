@@ -1,0 +1,134 @@
+arg = arg or {}
+package.path = "../runtime/lua/?.lua;../runtime/lua/?/init.lua;" .. package.path
+
+dofile("HeadlessWrapper.lua")
+
+local json = require("dkjson")
+
+local BASELINE_PATH = "__BASELINE_PATH__"
+local CANDIDATE_PATH = "__CANDIDATE_PATH__"
+local OUTPUT_PATH = "__OUTPUT_PATH__"
+local TARGET_SKILL = "__TARGET_SKILL__"
+local METRIC_KEYS = __METRIC_KEYS_LUA__
+
+local function read_all(path)
+  local f = assert(io.open(path, "r"))
+  local s = f:read("*a")
+  f:close()
+  return s
+end
+
+local function deepcopy(v)
+  return assert(json.decode(assert(json.encode(v))))
+end
+
+local function load_snapshot(path)
+  return assert(json.decode(read_all(path)))
+end
+
+local function lower(s)
+  return string.lower(tostring(s or ""))
+end
+
+local function select_skill_by_name(target)
+  local target_lower = lower(target)
+  local best_group = nil
+  local best_skill = nil
+  local selected_name = nil
+
+  for gi, sg in ipairs(build.skillsTab.socketGroupList or {}) do
+    for si, ds in ipairs(sg.displaySkillList or {}) do
+      local name = ds.activeEffect and ds.activeEffect.grantedEffect and ds.activeEffect.grantedEffect.name or ""
+      if lower(name) == target_lower then
+        best_group = gi
+        best_skill = si
+        selected_name = name
+      elseif not best_group and string.find(lower(name), target_lower, 1, true) then
+        best_group = gi
+        best_skill = si
+        selected_name = name
+      end
+    end
+  end
+
+  if not best_group then
+    return nil
+  end
+
+  local sg = build.skillsTab.socketGroupList[best_group]
+  sg.mainActiveSkill = best_skill
+  sg.mainActiveSkillCalcs = best_skill
+  sg.enabled = true
+  build.mainSocketGroup = best_group
+  build.modFlag = true
+  build.buildFlag = true
+  runCallback("OnFrame")
+
+  return {
+    group_index = best_group,
+    skill_index = best_skill,
+    selected_name = selected_name,
+  }
+end
+
+local function calc_metrics(snapshot)
+  loadBuildFromJSON(json.encode(snapshot.items), json.encode(snapshot.passive_skills))
+  runCallback("OnFrame")
+
+  local sel = select_skill_by_name(TARGET_SKILL)
+  build.calcsTab:BuildOutput()
+
+  local out = build.calcsTab.mainOutput or (build.calcsTab.mainEnv and build.calcsTab.mainEnv.player and build.calcsTab.mainEnv.player.output) or {}
+
+  local m = {
+    target_skill = TARGET_SKILL,
+    selected_skill = sel and sel.selected_name or nil,
+    skill_selected = sel ~= nil,
+  }
+
+  for _, k in ipairs(METRIC_KEYS) do
+    local v = out[k]
+    if type(v) == "number" then
+      m[k] = v
+    elseif v ~= nil then
+      m[k] = tostring(v)
+    else
+      m[k] = nil
+    end
+  end
+
+  return m
+end
+
+local baseline = load_snapshot(BASELINE_PATH)
+local candidate = load_snapshot(CANDIDATE_PATH)
+
+local result = {
+  character = {
+    name = baseline.items and baseline.items.character and baseline.items.character.name,
+    class = baseline.items and baseline.items.character and baseline.items.character.class,
+    level = baseline.items and baseline.items.character and baseline.items.character.level,
+  },
+  target_skill = TARGET_SKILL,
+  metric_keys = METRIC_KEYS,
+  baseline_metrics = calc_metrics(deepcopy(baseline)),
+  candidate_metrics = calc_metrics(deepcopy(candidate)),
+}
+
+local function delta(a, b)
+  if type(a) == "number" and type(b) == "number" then
+    return b - a
+  end
+  return nil
+end
+
+result.deltas = {}
+for _, key in ipairs(METRIC_KEYS) do
+  result.deltas[key] = delta(result.baseline_metrics[key], result.candidate_metrics[key])
+end
+
+local f = assert(io.open(OUTPUT_PATH, "w"))
+f:write(json.encode(result, { indent = true }))
+f:close()
+print(json.encode(result, { indent = true }))
+print("Wrote " .. OUTPUT_PATH)

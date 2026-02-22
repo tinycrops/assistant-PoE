@@ -1,6 +1,8 @@
+# [video coming soon]
+
 # PoE Character Tracking + Discord Memory Pipeline
 
-This repo tracks a Path of Exile character over time, computes build stats through headless Path of Building (PoB), and publishes structured Discord updates.
+This project is designed to be operated through [Codex](https://github.com/openai/codex): the built-in collaborative harness that sits between the player, the game, and the player's goals. In practice, Codex is the working interface that translates player intent into repeatable actions across this repo, reads game-derived data (PoE endpoints + PoB outputs), and turns that into structured outputs (market snapshots, memory updates, and build intelligence posts).
 
 ## User-Facing Capabilities
 
