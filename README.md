@@ -30,11 +30,17 @@ pip3 install -r requirements.txt
 ```bash
 cp .env.example .env
 ```
-3. Load env and defaults:
+3. Retrieve your `POESESSID` cookie (tiny tutorial):
+   - https://poedb.tw/us/POESESSID
+   - Add it to `.env` as:
+```bash
+POESESSID=your_cookie_value_here
+```
+4. Load env and defaults:
 ```bash
 set -a; source .env; source defaults.env; set +a
 ```
-4. Run a tracking snapshot:
+5. Run a tracking snapshot:
 ```bash
 python3 poe_stat_watch.py \
   --account "$POE_DEFAULT_ACCOUNT" \
