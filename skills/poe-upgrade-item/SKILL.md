@@ -24,11 +24,18 @@ Use this workflow to produce wearable, buyable upgrade links and recommendations
 - Add category/type filters for the target slot.
 - Add the user-requested stat filters (for example Dexterity minimum).
 - Add practical guardrails when appropriate (life and total resist minimums).
+- When the request is "best value" or "weighted", prefer PoB/trade weighted stat groups:
+  - Use `stats[].type = "weight"` (or `sum` where appropriate).
+  - Set per-stat `weight` values directly in each filter.
+  - Keep the query wearable first (required level, slot, rarity, trade mode), then apply weights.
 
 4. Execute and verify.
 - Submit `POST /api/trade/search/{league}`.
 - Fetch top listings via `GET /api/trade/fetch/{ids}?query={search_id}`.
 - Report top prices, key mods, and include one direct trade link.
+- If weighted queries are blocked by anonymous complexity limits, note that explicitly and fall back to:
+  - strict wearable filters in the trade query, then
+  - local weighted reranking of fetched results using the same user-provided weights.
 
 5. Return concise output.
 - State the exact current level used.
@@ -55,6 +62,10 @@ Useful stat IDs:
 - Dexterity: `explicit.stat_3261801346`
 - Maximum Life: `explicit.stat_3299347043`
 - Total Elemental Resistance (pseudo): `pseudo.pseudo_total_elemental_resistance`
+
+Weighted stat-group reminder:
+- `stats[].type` supports weighted workflows (`weight` / `sum`) in trade searches.
+- Add `weight` on each stat filter to express priority.
 
 ## Minimal Query Template
 

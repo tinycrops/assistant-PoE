@@ -1,0 +1,4 @@
+interface:
+  display_name: "PoE Weighted Trade Upgrade"
+  short_description: "Run weighted trade searches with auth and fallback."
+  default_prompt: "Find a wearable instant-buy upgrade using trade weighted stats, refresh level first, use POESESSID when available, and fallback to strict filters plus local rerank if weighted search is blocked."
