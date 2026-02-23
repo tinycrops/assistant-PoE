@@ -1,6 +1,18 @@
 # [video coming soon]
 
+## Video Showcase (Coming Soon)
+
+Planned demo: a short end-to-end walkthrough of the new `poe-upgrade-item` skill showing how Codex:
+- refreshes live character state first (including current level),
+- builds instant-buy (`securable`) trade queries,
+- enforces wearability with max required-level filters,
+- returns fast, practical upgrade links for in-session gear swaps.
+
 # PoE Character Tracking + Discord Memory Pipeline
+
+## About
+
+This repository is a Codex-operated Path of Exile assistant workflow: it captures character state, runs headless Path of Building calculations, enriches snapshots with market data, and publishes structured progression intelligence (`LOG`, `LEARN`, `NEXT`) to Discord.
 
 This project is designed to be operated through [Codex](https://github.com/openai/codex): the built-in collaborative harness that sits between the player, the game, and the player's goals. In practice, Codex is the working interface that translates player intent into repeatable actions across this repo, reads game-derived data (PoE endpoints + PoB outputs), and turns that into structured outputs (market snapshots, memory updates, and build intelligence posts).
 
