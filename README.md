@@ -1,8 +1,7 @@
 # Video Showcase
+Inline video on the GitHub README homepage requires uploading the MP4 through the GitHub web editor for `README.md`, which inserts a GitHub-hosted playable attachment URL.
 
-Demo video: [2026-02-27 15-45-46.mp4](assets/videos/2026-02-27-15-45-46.mp4)
-
-# PoE Character Tracking + Discord Memory Pipeline
+# PoE Character Tracking 
 
 ## About
 
