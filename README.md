@@ -7,17 +7,17 @@ https://github.com/user-attachments/assets/20ad8f62-7558-4b1c-a1c2-bd13ba1ff931
 https://github.com/user-attachments/assets/3c80ad9b-0d3a-4156-b13a-52e3a07f7061
 
 
-# PoE Character Tracking 
+# Character Tracking + Discord Memory Pipeline
 
 ## About
 
 This repository is a Codex-operated Path of Exile assistant workflow: it captures character state, runs headless Path of Building calculations, enriches snapshots with market data, and publishes structured progression intelligence (`LOG`, `LEARN`, `NEXT`) to Discord.
 
-This project is designed to be operated through [Codex](https://github.com/openai/codex): the built-in collaborative harness that sits between the player, the game, and the player's goals. In practice, Codex is the working interface that translates player intent into repeatable actions across this repo, reads game-derived data (PoE endpoints + PoB outputs), and turns that into structured outputs (market snapshots, memory updates, and build intelligence posts).
+This project is designed to be operated through [Codex](https://github.com/openai/codex): the built-in collaborative harness that sits between the player, the game, and the player's goals. In practice, Codex is the working interface that translates player intent into repeatable actions across this repo, reads game-derived data (account endpoints + PoB outputs), and turns that into structured outputs (market snapshots, memory updates, and build intelligence posts).
 
 ## User-Facing Capabilities
 
-- Pull live character data from PoE account endpoints (`character`, `items`, optional `passive_skills`)
+- Pull live character data from account endpoints (`character`, `items`, optional `passive_skills`)
 - Enrich holdings with live market pricing (currency, uniques, div cards)
 - Generate structured memory posts (`LOG`, `LEARN`, `NEXT`) for Discord
 - Build and post visual build intelligence cards (rule-based or OpenAI-driven)
@@ -89,6 +89,24 @@ python3 discord_persona_sender.py \
   --body "Progress checkpoint."
 ```
 
+Trade API rate-limit probe:
+```bash
+python3 trade_rate_limit_probe.py \
+  --league "$DEFAULT_LEAGUE" \
+  --mode "$DEFAULT_TRADE_MODE"
+```
+
+Weighted trade search:
+```bash
+python3 weighted_trade_search.py \
+  --category accessory.ring \
+  --price-max 35 \
+  --weight-min 170 \
+  --weight explicit.stat_3299347043=1.4 \
+  --weight explicit.stat_2923486259=2.1 \
+  --weight explicit.stat_2901986750=1.8
+```
+
 ## Auth Modes
 
 - `POESESSID` cookie auth:
@@ -104,6 +122,9 @@ python3 discord_persona_sender.py \
   - `logs/stat_watch/<character>_snapshot.json`
   - `logs/stat_watch/<character>_panel_stats.json`
   - `logs/stat_watch/<character>_history.jsonl`
+- Trade API rate-limit telemetry:
+  - `logs/trade_api/rate_limit_history.jsonl`
+  - `logs/trade_api/last_request_at.txt`
 - Discord post history:
   - `logs/discord_publish_history.jsonl`
 - OpenAI build intel artifacts:
