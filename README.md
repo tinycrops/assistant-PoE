@@ -1,12 +1,6 @@
-# [video coming soon]
+# Video Showcase
 
-## Video Showcase (Coming Soon)
-
-Planned demo: a short end-to-end walkthrough of the new `poe-upgrade-item` skill showing how Codex:
-- refreshes live character state first (including current level),
-- builds instant-buy (`securable`) trade queries,
-- enforces wearability with max required-level filters,
-- returns fast, practical upgrade links for in-session gear swaps.
+Demo video: [2026-02-27 15-45-46.mp4](file:///media/ath/video/assistant-PoE/2026-02-27%2015-45-46.mp4)
 
 # PoE Character Tracking + Discord Memory Pipeline
 
@@ -57,9 +51,9 @@ set -a; source .env; source defaults.env; set +a
 5. Run a tracking snapshot:
 ```bash
 python3 poe_stat_watch.py \
-  --account "$POE_DEFAULT_ACCOUNT" \
-  --realm "$POE_DEFAULT_REALM" \
-  --character "$POE_DEFAULT_CHARACTER"
+  --account "$DEFAULT_ACCOUNT" \
+  --realm "$DEFAULT_REALM" \
+  --character "$DEFAULT_CHARACTER"
 ```
 
 ## Primary Commands
@@ -67,18 +61,18 @@ python3 poe_stat_watch.py \
 Character stat + inventory tracking:
 ```bash
 python3 poe_stat_watch.py \
-  --account "$POE_DEFAULT_ACCOUNT" \
-  --realm "$POE_DEFAULT_REALM" \
-  --character "$POE_DEFAULT_CHARACTER" \
+  --account "$DEFAULT_ACCOUNT" \
+  --realm "$DEFAULT_REALM" \
+  --character "$DEFAULT_CHARACTER" \
   --include-storage
 ```
 
 Market sync + persona generation:
 ```bash
 python3 poe_market_pipeline.py \
-  --account "$POE_DEFAULT_ACCOUNT" \
-  --realm "$POE_DEFAULT_REALM" \
-  --character "$POE_DEFAULT_CHARACTER" \
+  --account "$DEFAULT_ACCOUNT" \
+  --realm "$DEFAULT_REALM" \
+  --character "$DEFAULT_CHARACTER" \
   --output openclaw_market_snapshot.json
 ```
 

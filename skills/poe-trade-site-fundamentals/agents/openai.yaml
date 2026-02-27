@@ -1,0 +1,4 @@
+interface:
+  display_name: "PoE Trade Site Fundamentals"
+  short_description: "Teach canonical PoE trade usage and produce valid search links."
+  default_prompt: "Teach and apply Path of Exile trade fundamentals, use canonical /trade/search/{league}/{id} links, and build accurate item queries with correct filters and modes."

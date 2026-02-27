@@ -30,11 +30,19 @@ HEADLESS_RUNNER = Path.home() / ".codex" / "skills" / "headless-pob-usage" / "sc
 EXTRACTOR_LUA = "../spec/ExtractPanelStatsFromSnapshot.lua"
 
 
+def env_first(*keys: str, default: str | None = None) -> str | None:
+    for key in keys:
+        value = os.environ.get(key)
+        if value is not None and value != "":
+            return value
+    return default
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="PoE character stat watcher with PoB panel deltas.")
-    parser.add_argument("--account", default=os.environ.get("POE_DEFAULT_ACCOUNT"), help="PoE account (Name#1234)")
-    parser.add_argument("--realm", default=os.environ.get("POE_DEFAULT_REALM", "pc"), choices=["pc", "xbox", "sony"])
-    parser.add_argument("--character", default=os.environ.get("POE_DEFAULT_CHARACTER"), help="Character name")
+    parser.add_argument("--account", default=env_first("DEFAULT_ACCOUNT", "POE_DEFAULT_ACCOUNT"), help="PoE account (Name#1234)")
+    parser.add_argument("--realm", default=env_first("DEFAULT_REALM", "POE_DEFAULT_REALM", default="pc"), choices=["pc", "xbox", "sony"])
+    parser.add_argument("--character", default=env_first("DEFAULT_CHARACTER", "POE_DEFAULT_CHARACTER"), help="Character name")
     parser.add_argument("--poesessid", default=os.environ.get("POESESSID"), help="POESESSID if needed for private profile")
     parser.add_argument("--league", default=None, help="Optional league override")
     parser.add_argument(
@@ -60,22 +68,22 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--oauth-token-file",
-        default=os.environ.get("POE_OAUTH_TOKEN_FILE", "logs/poe_oauth_token.json"),
+        default=env_first("OAUTH_TOKEN_FILE", "POE_OAUTH_TOKEN_FILE", default="logs/poe_oauth_token.json"),
         help="PoE OAuth token JSON path (from poe_oauth_login.py).",
     )
     parser.add_argument(
         "--oauth-client-id",
-        default=os.environ.get("POE_OAUTH_CLIENT_ID"),
+        default=env_first("OAUTH_CLIENT_ID", "POE_OAUTH_CLIENT_ID"),
         help="PoE OAuth client_id (used for token refresh).",
     )
     parser.add_argument(
         "--oauth-client-secret",
-        default=os.environ.get("POE_OAUTH_CLIENT_SECRET"),
+        default=env_first("OAUTH_CLIENT_SECRET", "POE_OAUTH_CLIENT_SECRET"),
         help="Optional PoE OAuth client_secret (used for token refresh).",
     )
     parser.add_argument(
         "--oauth-contact",
-        default=os.environ.get("POE_OAUTH_CONTACT", "local-user"),
+        default=env_first("OAUTH_CONTACT", "POE_OAUTH_CONTACT", default="local-user"),
         help="Contact string for OAuth API User-Agent.",
     )
     return parser.parse_args()
@@ -84,9 +92,9 @@ def parse_args() -> argparse.Namespace:
 def require_args(args: argparse.Namespace) -> None:
     missing = []
     if not args.account:
-        missing.append("--account or POE_DEFAULT_ACCOUNT")
+        missing.append("--account or DEFAULT_ACCOUNT")
     if not args.character:
-        missing.append("--character or POE_DEFAULT_CHARACTER")
+        missing.append("--character or DEFAULT_CHARACTER")
     if missing:
         raise SystemExit(f"Missing required values: {', '.join(missing)}")
 

@@ -1,4 +1,0 @@
-interface:
-  display_name: "PoE Upgrade Item"
-  short_description: "Find wearable instant-buy PoE upgrades from live trade."
-  default_prompt: "Use this skill to sync the latest character level, then build instant-buy trade searches with a max required level filter and recommend upgrade options."
