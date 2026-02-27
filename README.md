@@ -1,6 +1,10 @@
 # Video Showcase
 Inline video on the GitHub README homepage requires uploading the MP4 through the GitHub web editor for `README.md`, which inserts a GitHub-hosted playable attachment URL.
 
+https://github.com/user-attachments/assets/754ee4f7-2327-45f5-8788-95d99c0ed98c
+
+
+
 # PoE Character Tracking 
 
 ## About
