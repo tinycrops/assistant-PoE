@@ -1,4 +1,4 @@
-# PoE Discord Memory+Market Guide
+# Discord Memory+Market Guide
 
 ## Objective
 Run the working pipeline that:

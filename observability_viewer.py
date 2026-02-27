@@ -16,7 +16,7 @@ HTML = """<!doctype html>
 <head>
 <meta charset=\"utf-8\" />
 <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
-<title>PoE Observability</title>
+<title>Build Observability</title>
 <style>
 :root { --bg:#0f172a; --panel:#111827; --muted:#94a3b8; --text:#e5e7eb; --accent:#22d3ee; --line:#1f2937; }
 * { box-sizing: border-box; }
@@ -257,7 +257,7 @@ def _infer_run_id_from_response_id(response_id: str | None) -> str | None:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Local observability viewer for PoE build-intel runs")
+    parser = argparse.ArgumentParser(description="Local observability viewer for build-intel runs")
     parser.add_argument("--host", default="0.0.0.0")
     parser.add_argument("--port", type=int, default=5051)
     args = parser.parse_args()
