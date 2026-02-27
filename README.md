@@ -1,6 +1,6 @@
 # Video Showcase
 
-Demo video: [2026-02-27 15-45-46.mp4](file:///media/ath/video/assistant-PoE/2026-02-27%2015-45-46.mp4)
+Demo video: [2026-02-27 15-45-46.mp4](assets/videos/2026-02-27-15-45-46.mp4)
 
 # PoE Character Tracking + Discord Memory Pipeline
 
