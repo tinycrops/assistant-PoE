@@ -1,8 +1,10 @@
-# Video Showcase
-Inline video on the GitHub README homepage requires uploading the MP4 through the GitHub web editor for `README.md`, which inserts a GitHub-hosted playable attachment URL.
+## Initialize Character Context
+https://github.com/user-attachments/assets/20ad8f62-7558-4b1c-a1c2-bd13ba1ff931
 
-https://github.com/user-attachments/assets/754ee4f7-2327-45f5-8788-95d99c0ed98c
+## Project Vision: Level-by-level guidance
 
+
+https://github.com/user-attachments/assets/3c80ad9b-0d3a-4156-b13a-52e3a07f7061
 
 
 # PoE Character Tracking 
