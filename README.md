@@ -1,13 +1,13 @@
 ## Initialize Character Context
 https://github.com/user-attachments/assets/20ad8f62-7558-4b1c-a1c2-bd13ba1ff931
-
+# Roadmap
+-Automated Item Filter Editing by Codex
+-Automated Item Pricing by Codex
 ## Project Vision: Level-by-level guidance
 
 
 https://github.com/user-attachments/assets/3c80ad9b-0d3a-4156-b13a-52e3a07f7061
 
-
-# Character Tracking + Discord Memory Pipeline
 
 ## About
 
