@@ -12,10 +12,12 @@ import urllib.parse
 import urllib.request
 from dataclasses import dataclass
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 
-from discord_publish_log import DEFAULT_LOG_PATH
-from discord_persona_sender import build_persona_message, send_discord_message
+from character_ledger import update_from_market_snapshot
+from discord_persona_sender.discord_persona_sender import build_persona_message, send_discord_message
+from discord_persona_sender.discord_publish_log import DEFAULT_LOG_PATH
 from poe_character_sync import (
     PoeApiError,
     choose_character,
@@ -316,6 +318,9 @@ def main() -> int:
         if args.output:
             with open(args.output, "w", encoding="utf-8") as f:
                 json.dump(output, f, indent=2)
+            update_from_market_snapshot(output, Path(args.output))
+        else:
+            update_from_market_snapshot(output)
 
         if args.dry_run or args.no_discord:
             for post in posts:

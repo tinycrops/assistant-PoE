@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PhysicalDamage Snapshot Report</title>
+  <style>
+    :root {
+      --bg: #f4efe7;
+      --panel: #fffaf3;
+      --ink: #1c1917;
+      --muted: #57534e;
+      --line: #d6d3d1;
+      --accent: #9a3412;
+    }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at top left, rgba(154, 52, 18, 0.14), transparent 28%),
+        linear-gradient(180deg, #f8f3ea 0%, var(--bg) 100%);
+      color: var(--ink);
+    }
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 20px 56px;
+    }
+    h1, h2, h3 {
+      font-weight: 600;
+      margin: 0 0 12px;
+    }
+    p {
+      margin: 0;
+      color: var(--muted);
+    }
+    .hero {
+      background: linear-gradient(135deg, rgba(154, 52, 18, 0.95), rgba(41, 37, 36, 0.92));
+      color: #fff7ed;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 18px 50px rgba(28, 25, 23, 0.16);
+    }
+    .hero p {
+      color: rgba(255, 247, 237, 0.86);
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+    }
+    .stat-card, .chart-card, .table-card, .notes-card {
+      background: var(--panel);
+      border: 1px solid rgba(87, 83, 78, 0.16);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 12px 28px rgba(28, 25, 23, 0.06);
+    }
+    .stat-value {
+      display: block;
+      font-size: 1.8rem;
+      color: var(--accent);
+      margin-top: 8px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 18px;
+      margin-top: 22px;
+    }
+    .chart-card svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      margin-top: 12px;
+      overflow: visible;
+    }
+    .axis {
+      stroke: var(--line);
+      stroke-width: 1;
+    }
+    .axis-label {
+      fill: var(--muted);
+      font-size: 12px;
+    }
+    ul {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--muted);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 0.95rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+    th {
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .empty {
+      color: var(--muted);
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <h1>PhysicalDamage Snapshot Report</h1>
+      <p>Ledger-backed validation view for captured stat-watch runs.</p>
+    </section>
+
+    <section class="stats">
+      <article class="stat-card">
+        <h2>Snapshots</h2>
+        <span class="stat-value">0</span>
+      </article>
+      <article class="stat-card">
+        <h2>Last Capture</h2>
+        <span class="stat-value">unknown</span>
+      </article>
+      <article class="stat-card">
+        <h2>Latest Life</h2>
+        <span class="stat-value">n/a</span>
+      </article>
+      <article class="stat-card">
+        <h2>Latest DPS</h2>
+        <span class="stat-value">n/a</span>
+      </article>
+    </section>
+
+    <section class="grid">
+      <section class='chart-card'><h3>Life</h3><p class='empty'>No captured values yet.</p></section><section class='chart-card'><h3>Energy Shield</h3><p class='empty'>No captured values yet.</p></section><section class='chart-card'><h3>Total DPS</h3><p class='empty'>No captured values yet.</p></section><section class='chart-card'><h3>Fire Resist %</h3><p class='empty'>No captured values yet.</p></section><section class='chart-card'><h3>Cold Resist %</h3><p class='empty'>No captured values yet.</p></section><section class='chart-card'><h3>Lightning Resist %</h3><p class='empty'>No captured values yet.</p></section><section class='chart-card'><h3>Chaos Resist %</h3><p class='empty'>No captured values yet.</p></section>
+    </section>
+
+    <section class="grid">
+      <article class="notes-card">
+        <h2>Latest Observations</h2>
+        <ul><li>User reported early progress: completed Tidal Island at level 3 and hit level 4 in the next zone.</li><li>Demo character scaffolded for Codex showcase work. Refresh with poe_stat_watch.py before using snapshot-derived guidance.</li></ul>
+      </article>
+      <article class="table-card">
+        <h2>Snapshot Index</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Captured</th>
+              <th>Life</th>
+              <th>ES</th>
+              <th>DPS</th>
+              <th>Items</th>
+              <th>Archived Snapshot</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

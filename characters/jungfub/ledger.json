@@ -1,0 +1,204 @@
+{
+  "schema_version": 1,
+  "character": {
+    "name": "JungFub",
+    "slug": "jungfub",
+    "account": "tinycrops#3233",
+    "realm": "pc",
+    "league": "Keepers"
+  },
+  "active_context": {
+    "last_event_type": "stat_watch",
+    "last_event_at_utc": "2026-02-27T21:38:01.773772+00:00"
+  },
+  "latest_snapshot": {
+    "captured_at_utc": "2026-02-27T21:38:01.773772+00:00",
+    "stats": {
+      "defence.life": 2795,
+      "defence.energy_shield": 1146,
+      "defence.mana": 798,
+      "defence.fire_resist_percent": 61,
+      "defence.cold_resist_percent": 66,
+      "defence.lightning_resist_percent": 75,
+      "defence.chaos_resist_percent": -39,
+      "offence.total_dps": 9558.5700307495,
+      "offence.average_hit": 7704.1618758481,
+      "misc.movement_speed_modifier_percent": 1.46
+    },
+    "inventory_counts": {
+      "total_items": 46,
+      "equipped_slots": 14,
+      "flasks": 5,
+      "backpack_items": 27,
+      "socketed_gems": 20
+    },
+    "equipped_changes": [
+      "Amulet: None -> Eyes of the Greatwolf Greatwolf Talisman",
+      "Belt: None -> Foulborn Belt of the Deceiver Heavy Belt",
+      "BodyArmour: None -> Dendrobate Sentinel Jacket",
+      "Boots: None -> Rift Pace Stealth Boots",
+      "BrequelGrafts: None -> Taut Repose Squalling Tulgraft",
+      "BrequelGrafts2: None -> Gaunt Spark Replicating Eshgraft",
+      "Flask: None -> Endless Jade Flask of Penetrating",
+      "Gloves: None -> Asenath's Gentle Touch Silk Gloves",
+      "Helm: None -> Ravenous Passion Zealot Helmet",
+      "Offhand: None -> Hypnotic Spell Thorium Spirit Shield",
+      "Offhand2: None -> Serrated Arrow Quiver",
+      "Ring: None -> Kikazaru Topaz Ring",
+      "Ring2: None -> Oblivion Band Two-Stone Ring",
+      "Weapon: None -> Foulborn The Poet's Pen Somatic Wand",
+      "Weapon2: None -> Dusk Branch Long Bow"
+    ],
+    "top_stat_changes": [
+      {
+        "stat": "offence.total_dps",
+        "before": 0.0,
+        "after": 9558.5700307495,
+        "delta": 9558.5700307495
+      },
+      {
+        "stat": "offence.average_damage",
+        "before": 0.0,
+        "after": 7704.1618758481,
+        "delta": 7704.1618758481
+      },
+      {
+        "stat": "offence.average_hit",
+        "before": 0.0,
+        "after": 7704.1618758481,
+        "delta": 7704.1618758481
+      },
+      {
+        "stat": "defence.evasion",
+        "before": 0.0,
+        "after": 3410.0,
+        "delta": 3410.0
+      },
+      {
+        "stat": "defence.life",
+        "before": 0.0,
+        "after": 2795.0,
+        "delta": 2795.0
+      },
+      {
+        "stat": "defence.energy_shield",
+        "before": 0.0,
+        "after": 1146.0,
+        "delta": 1146.0
+      },
+      {
+        "stat": "defence.mana",
+        "before": 0.0,
+        "after": 798.0,
+        "delta": 798.0
+      },
+      {
+        "stat": "misc.life_regen",
+        "before": 0.0,
+        "after": 340.0,
+        "delta": 340.0
+      }
+    ]
+  },
+  "latest_market": {
+    "generated_at_utc": "2026-02-27T18:56:32.075478+00:00",
+    "pricing_summary": {
+      "priced_items": 9,
+      "total_items": 19,
+      "known_value_chaos": 152.7,
+      "top_holdings": [
+        {
+          "label": "Dendrobate Sentinel Jacket",
+          "quantity": 1,
+          "chaos_value": 50.0,
+          "source": "item-name"
+        },
+        {
+          "label": "Eyes of the Greatwolf Greatwolf Talisman",
+          "quantity": 1,
+          "chaos_value": 40.0,
+          "source": "item-name"
+        },
+        {
+          "label": "Foulborn The Poet's Pen Somatic Wand",
+          "quantity": 1,
+          "chaos_value": 36.0,
+          "source": "item-name"
+        },
+        {
+          "label": "Ravenous Passion Zealot Helmet",
+          "quantity": 1,
+          "chaos_value": 10.0,
+          "source": "item-name"
+        },
+        {
+          "label": "Atziri's Promise Amethyst Flask",
+          "quantity": 1,
+          "chaos_value": 6.8,
+          "source": "item-name"
+        },
+        {
+          "label": "Asenath's Gentle Touch Silk Gloves",
+          "quantity": 1,
+          "chaos_value": 5.9,
+          "source": "item-name"
+        },
+        {
+          "label": "Kikazaru Topaz Ring",
+          "quantity": 1,
+          "chaos_value": 2.0,
+          "source": "item-name"
+        },
+        {
+          "label": "The Sorrow of the Divine Sulphur Flask",
+          "quantity": 1,
+          "chaos_value": 1.0,
+          "source": "item-name"
+        },
+        {
+          "label": "Foulborn Belt of the Deceiver Heavy Belt",
+          "quantity": 1,
+          "chaos_value": 1.0,
+          "source": "item-name"
+        }
+      ]
+    },
+    "posts": [
+      "[LOG][JungFub/Keepers/2026-02-27] Market sync complete. Priced 9/19 items (47% coverage). Estimated known value 152.7 chaos. Top: Dendrobate Sentinel Jacket x1 ~50.0c; Eyes of the Greatwolf Greatwolf Talisman x1 ~40.0c; Foulborn The Poet's Pen Somatic Wand x1 ~36.0c.",
+      "[LEARN][market-coverage] Direct pricing works best for currency/uniques/div cards. Current coverage is 47%, so rare-crafted gear still needs manual trade checks.",
+      "[NEXT][P1] List-test Dendrobate Sentinel Jacket first, then run one upgrade search scoped to a 30c budget from priced assets."
+    ]
+  },
+  "latest_observations": [
+    "Known market value is 152.7 chaos across 9/19 priced items (47% coverage).",
+    "Top liquid or semi-liquid holding is Dendrobate Sentinel Jacket at about 50 chaos.",
+    "Latest action prompt: [NEXT][P1] List-test Dendrobate Sentinel Jacket first, then run one upgrade search scoped to a 30c budget from priced assets.",
+    "Current baseline: life 2795, energy shield 1146, total DPS 9558.57.",
+    "Gear changed in 15 slots during the latest stat-watch run.",
+    "Largest measured deltas: offence.total_dps 0 -> 9558.57; offence.average_damage 0 -> 7704.16; offence.average_hit 0 -> 7704.16.",
+    "Inventory footprint: 46 total items, 14 equipped slots, 20 socketed gems."
+  ],
+  "milestones": [
+    {
+      "timestamp_utc": "2026-02-27T18:56:32.075478+00:00",
+      "type": "market_sync",
+      "summary": "Market sync captured 152.7 chaos in known value; top holding Dendrobate Sentinel Jacket",
+      "source": "jungfub_market_snapshot.json"
+    },
+    {
+      "timestamp_utc": "2026-02-27T21:38:01.773772+00:00",
+      "type": "stat_watch",
+      "summary": "15 gear slot changes; offence.total_dps to 9558.57; offence.average_damage to 7704.16",
+      "source": "logs/stat_watch/jungfub_history.jsonl"
+    }
+  ],
+  "sources": {
+    "stat_watch": {
+      "snapshot_path": "logs/stat_watch/jungfub_snapshot.json",
+      "panel_stats_path": "logs/stat_watch/jungfub_panel_stats.json",
+      "history_path": "logs/stat_watch/jungfub_history.jsonl"
+    },
+    "market_snapshot": "jungfub_market_snapshot.json"
+  },
+  "updated_at_utc": "2026-02-27T22:19:42.445135+00:00"
+}

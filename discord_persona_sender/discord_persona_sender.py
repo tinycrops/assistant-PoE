@@ -17,7 +17,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
-from discord_publish_log import DEFAULT_LOG_PATH, append_publish_history
+from discord_persona_sender.discord_publish_log import DEFAULT_LOG_PATH, append_publish_history
 
 MAX_CONTENT_LEN = 1900
 

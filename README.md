@@ -122,6 +122,9 @@ python3 weighted_trade_search.py \
   - `logs/stat_watch/<character>_snapshot.json`
   - `logs/stat_watch/<character>_panel_stats.json`
   - `logs/stat_watch/<character>_history.jsonl`
+- Character memory ledger:
+  - `characters/<character-slug>/ledger.json`
+  - `characters/<character-slug>/journal.jsonl`
 - Trade API rate-limit telemetry:
   - `logs/trade_api/rate_limit_history.jsonl`
   - `logs/trade_api/last_request_at.txt`
@@ -146,3 +149,12 @@ python3 weighted_trade_search.py \
 
 - Full progression notes for today’s run are in:
   - `docs/session-2026-02-21-level1-to-act2.md`
+
+## Character Context
+
+- `defaults.env` defines the active character Codex should operate against.
+- Character-specific progress is preserved under `characters/<character-slug>/`.
+- `poe_stat_watch.py` and `poe_market_pipeline.py` now update that ledger automatically so switching the active character does not discard prior observations.
+- `weighted_trade_search.py` also stamps the ledger with live `level`, `class`, `league`, and `last_live_confirmed_at_utc` before building a trade query. Use that live-confirmed metadata for progression-sensitive trade advice instead of trusting an old stat snapshot.
+- Progression-sensitive trade recommendations should start from a recent headless PoB stat-watch run. `weighted_trade_search.py` now requires a recent `latest_snapshot.captured_at_utc` in the character ledger by default and exits with a clear refresh message when the PoB snapshot is stale. Use `--allow-stale-pob` only when you intentionally want to bypass that guard.
+- User-facing trade links should default to instant buyout via `status.option = "securable"`. Use `online` only when manual whisper trading is explicitly requested.

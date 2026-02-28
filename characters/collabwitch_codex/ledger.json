@@ -1,0 +1,174 @@
+{
+  "schema_version": 1,
+  "character": {
+    "name": "CollabWitch_Codex",
+    "slug": "collabwitch_codex",
+    "account": "tinycrops#3233",
+    "realm": "pc",
+    "league": "Keepers",
+    "class": "Elementalist",
+    "level": 57,
+    "last_live_confirmed_at_utc": "2026-02-27T22:59:32.053928+00:00"
+  },
+  "active_context": {
+    "last_event_type": "live_character_sync",
+    "last_event_at_utc": "2026-02-27T22:59:32.053928+00:00"
+  },
+  "latest_snapshot": {
+    "captured_at_utc": "2026-02-27T22:58:16.193540+00:00",
+    "stats": {
+      "defence.life": 1589,
+      "defence.energy_shield": 777,
+      "defence.mana": 752,
+      "defence.fire_resist_percent": 75,
+      "defence.cold_resist_percent": 63,
+      "defence.lightning_resist_percent": 75,
+      "defence.chaos_resist_percent": 22,
+      "offence.total_dps": 4301.3697816667,
+      "offence.average_hit": 1583.3263,
+      "misc.movement_speed_modifier_percent": 1.09
+    },
+    "inventory_counts": {
+      "total_items": 18,
+      "equipped_slots": 13,
+      "flasks": 5,
+      "backpack_items": 0,
+      "socketed_gems": 21
+    },
+    "equipped_changes": [
+      "Amulet: Dragon Rosary Gold Amulet -> Soul Rosary Spinefuse Talisman",
+      "Belt: Damnation Strap Chain Belt -> Armageddon Leash Heavy Belt",
+      "BodyArmour: Mind Coat Chestplate -> Wrath Guardian Conjurer's Vestment",
+      "Boots: Dread Tread Goathide Boots -> Spirit Tread Silk Slippers",
+      "BrequelGrafts2: Fleshgraft -> Malformed Aegis Tulgraft of Lasting",
+      "Flask: Small Hybrid Flask -> Seething Hallowed Life Flask of Quashing",
+      "Helm: Woe Shelter Vine Circlet -> Chimeric Halo Lunaris Circlet",
+      "Offhand: Blood Charm Twig Spirit Shield -> Corpse Watch Steel Kite Shield",
+      "Ring: Havoc Eye Two-Stone Ring -> Soul Coil Gold Ring",
+      "Ring2: Victory Band Paua Ring -> Vortex Turn Gold Ring",
+      "Weapon: Death Gnarl Goat's Horn -> Carrion Call Crystal Wand",
+      "Weapon2: None -> Death Gnarl Goat's Horn"
+    ],
+    "top_stat_changes": [
+      {
+        "stat": "offence.total_dps",
+        "before": 0.0,
+        "after": 4301.3697816667,
+        "delta": 4301.3697816667
+      },
+      {
+        "stat": "offence.average_damage",
+        "before": 0.0,
+        "after": 1583.3263,
+        "delta": 1583.3263
+      },
+      {
+        "stat": "offence.average_hit",
+        "before": 0.0,
+        "after": 1583.3263,
+        "delta": 1583.3263
+      },
+      {
+        "stat": "defence.life",
+        "before": 534.0,
+        "after": 1589.0,
+        "delta": 1055.0
+      },
+      {
+        "stat": "defence.energy_shield",
+        "before": 54.0,
+        "after": 777.0,
+        "delta": 723.0
+      },
+      {
+        "stat": "defence.mana",
+        "before": 344.0,
+        "after": 752.0,
+        "delta": 408.0
+      },
+      {
+        "stat": "defence.armour",
+        "before": 98.0,
+        "after": 401.0,
+        "delta": 303.0
+      },
+      {
+        "stat": "defence.evasion",
+        "before": 284.0,
+        "after": 121.0,
+        "delta": -163.0
+      }
+    ]
+  },
+  "latest_market": {
+    "generated_at_utc": "2026-02-27T22:58:13.444962+00:00",
+    "pricing_summary": {
+      "priced_items": 0,
+      "total_items": 18,
+      "known_value_chaos": 0,
+      "top_holdings": []
+    },
+    "posts": [
+      "[LOG][CollabWitch_Codex/Keepers/2026-02-27] Market sync complete. Priced 0/18 items (0% coverage). Estimated known value 0.0 chaos. Top: No priced holdings yet.",
+      "[LEARN][market-coverage] Direct pricing works best for currency/uniques/div cards. Current coverage is 0%, so rare-crafted gear still needs manual trade checks.",
+      "[NEXT][P1] Farm one inventory tab of liquid currency, then rerun sync to establish a spendable budget baseline."
+    ]
+  },
+  "latest_observations": [
+    "Current baseline: life 1589, energy shield 777, total DPS 4301.37.",
+    "Gear changed in 12 slots during the latest stat-watch run.",
+    "Largest measured deltas: offence.total_dps 0 -> 4301.37; offence.average_damage 0 -> 1583.33; offence.average_hit 0 -> 1583.33.",
+    "Inventory footprint: 18 total items, 13 equipped slots, 21 socketed gems.",
+    "Known market value is 0 chaos across 0/18 priced items (0% coverage).",
+    "Latest action prompt: [NEXT][P1] Farm one inventory tab of liquid currency, then rerun sync to establish a spendable budget baseline.",
+    "Current baseline: life 534, energy shield 54, total DPS 0.",
+    "Inventory footprint: 53 total items, 12 equipped slots, 9 socketed gems."
+  ],
+  "milestones": [
+    {
+      "timestamp_utc": "2026-02-27T22:59:32.053928+00:00",
+      "type": "live_character_sync",
+      "summary": "Live character confirmed at level 57 in Keepers (previous ledger level: unknown)",
+      "source": "character-window/get-characters"
+    },
+    {
+      "timestamp_utc": "2026-02-27T22:58:16.193540+00:00",
+      "type": "stat_watch",
+      "summary": "12 gear slot changes; offence.total_dps to 4301.37; offence.average_damage to 1583.33",
+      "source": "logs/stat_watch/collabwitch_codex_history.jsonl"
+    },
+    {
+      "timestamp_utc": "2026-02-27T22:58:13.444962+00:00",
+      "type": "market_sync",
+      "summary": "Market sync captured 0 chaos in known value",
+      "source": "logs/stat_watch/collabwitch_codex_snapshot.json"
+    },
+    {
+      "timestamp_utc": "2026-02-27T22:52:02.404419+00:00",
+      "type": "live_character_sync",
+      "summary": "Live character confirmed at level 57 in Keepers",
+      "source": "character-window/get-characters"
+    },
+    {
+      "timestamp_utc": "2026-02-27T22:51:54.769834+00:00",
+      "type": "live_character_sync",
+      "summary": "Live character confirmed at level 57 in Keepers (previous ledger level: unknown)",
+      "source": "character-window/get-characters"
+    },
+    {
+      "timestamp_utc": "2026-02-22T17:51:25.229034+00:00",
+      "type": "stat_watch",
+      "summary": "Snapshot recorded with no measured deltas",
+      "source": "logs/stat_watch/collabwitch_codex_history.jsonl"
+    }
+  ],
+  "sources": {
+    "stat_watch": {
+      "snapshot_path": "logs/stat_watch/collabwitch_codex_snapshot.json",
+      "panel_stats_path": "logs/stat_watch/collabwitch_codex_panel_stats.json",
+      "history_path": "logs/stat_watch/collabwitch_codex_history.jsonl"
+    },
+    "market_snapshot": "logs/stat_watch/collabwitch_codex_snapshot.json"
+  },
+  "updated_at_utc": "2026-02-27T22:59:32.053962+00:00"
+}

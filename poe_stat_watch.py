@@ -14,6 +14,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from character_ledger import update_from_stat_watch
 from poe_character_sync import PoeApiError, get_stash_items, normalize_account_name
 from poe_oauth import (
     PoeOAuthError,
@@ -121,6 +122,38 @@ def save_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8") as f:
         json.dump(payload, f, indent=2)
+
+
+def archive_timestamp(timestamp_utc: str) -> str:
+    compact = timestamp_utc.replace("-", "").replace(":", "")
+    compact = compact.replace("+00:00", "Z")
+    compact = compact.replace(".", "_")
+    return compact
+
+
+def archive_snapshot_artifacts(
+    *,
+    state_dir: Path,
+    char_slug: str,
+    timestamp_utc: str,
+    snapshot_doc: dict[str, Any],
+    panel_stats: dict[str, Any],
+    history_record: dict[str, Any],
+) -> dict[str, Path]:
+    archive_dir = state_dir / "archive" / char_slug
+    stem = archive_timestamp(timestamp_utc)
+    snapshot_archive = archive_dir / f"{stem}_snapshot.json"
+    panel_stats_archive = archive_dir / f"{stem}_panel_stats.json"
+    delta_archive = archive_dir / f"{stem}_delta.json"
+    save_json(snapshot_archive, snapshot_doc)
+    save_json(panel_stats_archive, panel_stats)
+    save_json(delta_archive, history_record)
+    return {
+        "archive_dir": archive_dir,
+        "snapshot": snapshot_archive,
+        "panel_stats": panel_stats_archive,
+        "delta": delta_archive,
+    }
 
 
 def item_label(item: dict[str, Any]) -> str:
@@ -455,6 +488,28 @@ def main() -> int:
     with history_path.open("a", encoding="utf-8") as f:
         f.write(json.dumps(record, ensure_ascii=True) + "\n")
 
+    archived_paths = archive_snapshot_artifacts(
+        state_dir=state_dir,
+        char_slug=char_slug,
+        timestamp_utc=ts,
+        snapshot_doc=snapshot_doc,
+        panel_stats=current_stats,
+        history_record=record,
+    )
+
+    update_from_stat_watch(
+        character_name=args.character,
+        account=args.account,
+        realm=args.realm,
+        snapshot_doc=snapshot_doc,
+        panel_stats=current_stats,
+        history_record=record,
+        snapshot_path=snapshot_path,
+        stats_path=stats_path,
+        history_path=history_path,
+        archived_paths=archived_paths,
+    )
+
     print(f"Character: {args.character} ({args.realm})")
     print(f"Captured: {ts}")
     print("")
@@ -510,6 +565,7 @@ def main() -> int:
     print(f"Saved snapshot: {snapshot_path}")
     print(f"Saved panel stats: {stats_path}")
     print(f"Appended history: {history_path}")
+    print(f"Archived snapshot set: {archived_paths['archive_dir']}")
     return 0
 
 

@@ -6,8 +6,11 @@ from __future__ import annotations
 import argparse
 import json
 import os
+from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 
+from character_ledger import ensure_ledger, parse_timestamp, update_from_live_character
 from poe_character_sync import PoeApiError, choose_character, get_characters, normalize_account_name
 from trade_api import RATE_LIMIT_LOG_PATH, TradeApiError, fetch_trade_results, post_trade_search
 
@@ -48,7 +51,46 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--weight-min", type=float, default=None, help="Minimum weighted score.")
     parser.add_argument("--weight", action="append", default=[], type=parse_weight, help="Weighted stat in stat_id=weight format. Repeat per stat.")
     parser.add_argument("--fetch-limit", type=int, default=3, help="Number of top listings to fetch and summarize.")
+    parser.add_argument(
+        "--max-pob-age-hours",
+        type=float,
+        default=float(env_first("DEFAULT_MAX_POB_AGE_HOURS", default="24") or "24"),
+        help="Require a headless PoB snapshot in the ledger newer than this many hours. Default: 24.",
+    )
+    parser.add_argument(
+        "--allow-stale-pob",
+        action="store_true",
+        help="Bypass the ledger PoB freshness check for cases where a trade query must run without a recent headless PoB snapshot.",
+    )
     return parser.parse_args()
+
+
+def utc_now() -> datetime:
+    return datetime.now(timezone.utc)
+
+
+def require_recent_pob_snapshot(character_name: str, max_age_hours: float) -> dict[str, Any]:
+    ledger_path, _, ledger = ensure_ledger(character_name)
+    latest_snapshot = ledger.get("latest_snapshot", {})
+    if not isinstance(latest_snapshot, dict):
+        raise SystemExit(
+            f"No headless PoB snapshot recorded for {character_name}. Run poe_stat_watch.py first. Ledger: {ledger_path}"
+        )
+
+    captured_at = parse_timestamp(latest_snapshot.get("captured_at_utc"))
+    if captured_at is None:
+        raise SystemExit(
+            f"Missing headless PoB snapshot timestamp for {character_name}. Run poe_stat_watch.py first. Ledger: {ledger_path}"
+        )
+
+    age_hours = (utc_now() - captured_at).total_seconds() / 3600.0
+    if age_hours > max_age_hours:
+        raise SystemExit(
+            "Headless PoB snapshot is stale for "
+            f"{character_name}: {captured_at.isoformat()} UTC ({age_hours:.1f}h old). "
+            f"Run poe_stat_watch.py first or use --allow-stale-pob to override. Ledger: {ledger_path}"
+        )
+    return latest_snapshot
 
 
 def resolve_character_state(args: argparse.Namespace) -> dict[str, Any]:
@@ -61,6 +103,7 @@ def resolve_character_state(args: argparse.Namespace) -> dict[str, Any]:
     selected = choose_character(characters, args.character)
     if selected is None:
         raise PoeApiError(f"Character '{args.character}' was not found on this account/realm.")
+    update_from_live_character(character_doc=selected, account=account, realm=args.realm)
     return selected
 
 
@@ -120,6 +163,8 @@ def main() -> int:
         raise SystemExit("Provide at least one --weight stat_id=weight pair.")
 
     try:
+        if not args.allow_stale_pob:
+            require_recent_pob_snapshot(args.character, args.max_pob_age_hours)
         character = resolve_character_state(args)
         league = args.league or str(character.get("league", "")).strip() or env_first("DEFAULT_LEAGUE", default="Standard")
         query = build_query(args, character)
