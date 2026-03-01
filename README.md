@@ -1,8 +1,11 @@
 ## Initialize Character Context
 https://github.com/user-attachments/assets/20ad8f62-7558-4b1c-a1c2-bd13ba1ff931
 # Roadmap
--Automated Item Filter Editing by Codex
--Automated Item Pricing by Codex
+
+-Automated Item Filter Editing by Codex https://github.com/NeverSinkDev/NeverSink-Filter
+
+-Automated Item Pricing by Codex https://github.com/SnosMe/awakened-poe-trade
+
 ## Project Vision: Level-by-level guidance
 
 
