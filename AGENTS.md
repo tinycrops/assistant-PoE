@@ -11,3 +11,7 @@ Save every new stat-watch snapshot as an immutable archived artifact for the act
 
 Temprary objectives:
 things got a little crazy and now there are unnecessary poe, POE, PoE prefixes everywhere in this repo. if you notice them, please remove them thoughtfully.
+
+Going forward our objective is to construct an ecosystem/living organism around/with the character data we extract. 
+
+The player character is not just a list of stats, it is a report card of the user's understanding and mastery in the game.
