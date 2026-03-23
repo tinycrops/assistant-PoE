@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Applying Character-Centered Reasoning Research to Assistant-PoE</title>
+  <style>
+    :root {
+      --bg: #f3efe8;
+      --paper: #fffdfa;
+      --ink: #181512;
+      --muted: #6e655d;
+      --red: #a43737;
+      --blue: #205c76;
+      --gold: #b77a19;
+      --line: #ddd1c2;
+      --shadow: 0 24px 60px rgba(31, 18, 5, 0.12);
+      --good: #24694b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Palatino Linotype", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 0%, rgba(164,55,55,0.10), transparent 28%),
+        radial-gradient(circle at 100% 10%, rgba(32,92,118,0.12), transparent 26%),
+        linear-gradient(180deg, #f7f2eb 0%, #efe5d7 100%);
+    }
+    .page {
+      width: min(1160px, calc(100vw - 40px));
+      margin: 24px auto 56px;
+      background: var(--paper);
+      border: 1px solid rgba(90,70,50,0.18);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,0.018) 0 1px, transparent 1px 100%),
+        linear-gradient(rgba(0,0,0,0.014) 0 1px, transparent 1px 100%);
+      background-size: 34px 34px;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+    header {
+      padding: 46px 52px 30px;
+      border-bottom: 3px solid var(--ink);
+      background:
+        linear-gradient(135deg, rgba(164,55,55,0.08), transparent 40%),
+        linear-gradient(225deg, rgba(32,92,118,0.08), transparent 45%);
+    }
+    .kicker {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font: 600 12px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+      color: var(--red);
+      margin-bottom: 16px;
+    }
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(34px, 5vw, 68px);
+      line-height: 0.97;
+      max-width: 980px;
+    }
+    .subtitle {
+      color: var(--muted);
+      font-size: 19px;
+      max-width: 930px;
+    }
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+    }
+    .meta .box, .card, .score, .table-wrap, .callout, .diagram {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.82);
+    }
+    .meta .box { padding: 12px 14px; }
+    .label {
+      display: block;
+      font: 600 11px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+    main { padding: 34px 52px 56px; }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.35fr 0.85fr;
+      gap: 22px;
+      margin-bottom: 28px;
+    }
+    .card { padding: 22px; }
+    .abstract { border-left: 8px solid var(--red); font-size: 17px; }
+    .scores {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .score { padding: 14px; }
+    .score .num { font-size: 34px; line-height: 1; font-weight: 700; }
+    .score .cap {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+    h2 {
+      margin: 38px 0 16px;
+      font-size: 28px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+    h3 { margin: 0 0 8px; font-size: 20px; }
+    p { margin: 0 0 14px; }
+    .two-col, .three-col { display: grid; gap: 18px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .diagram {
+      padding: 18px;
+      background: linear-gradient(180deg, rgba(32,92,118,0.05), rgba(255,255,255,0.9));
+      margin: 16px 0;
+    }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      align-items: stretch;
+      font: 600 14px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .node {
+      padding: 16px 12px;
+      min-height: 88px;
+      border: 1px solid var(--line);
+      background: white;
+    }
+    .arrow {
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      color: var(--red);
+    }
+    .table-wrap { overflow: auto; margin: 16px 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { padding: 11px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th {
+      text-align: left;
+      background: rgba(24,21,18,0.05);
+      font: 600 12px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .bars { display: grid; gap: 10px; margin: 16px 0; }
+    .bar-row {
+      display: grid;
+      grid-template-columns: 180px 1fr 74px;
+      gap: 12px;
+      align-items: center;
+      font-size: 14px;
+    }
+    .track {
+      height: 18px;
+      background: #eadfce;
+      border: 1px solid #d4c7b6;
+      overflow: hidden;
+    }
+    .fill { height: 100%; background: linear-gradient(90deg, var(--blue), #4898b3); }
+    .fill.gold { background: linear-gradient(90deg, var(--gold), #e1b569); }
+    .fill.red { background: linear-gradient(90deg, #8d2e2e, #d16c6c); }
+    .callout {
+      margin: 18px 0;
+      padding: 18px 20px;
+      border-left: 6px solid var(--gold);
+      background: linear-gradient(180deg, rgba(183,122,25,0.08), rgba(255,255,255,0.9));
+      font-size: 18px;
+    }
+    ul { margin: 0; padding-left: 20px; }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.92em;
+      background: rgba(24,21,18,0.06);
+      padding: 0.12em 0.34em;
+      border-radius: 4px;
+    }
+    .footer {
+      margin-top: 28px;
+      padding-top: 16px;
+      border-top: 1px dashed var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    @media (max-width: 900px) {
+      header, main { padding-left: 22px; padding-right: 22px; }
+      .meta, .hero, .two-col, .three-col, .flow, .scores { grid-template-columns: 1fr; }
+      .bar-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <article class="page">
+    <header>
+      <div class="kicker">Research Paper · Assistant-PoE · March 23, 2026</div>
+      <h1>Applying Character-Centered Reasoning Research to Assistant-PoE</h1>
+      <div class="subtitle">
+        A report on the first repo-native benchmark built from existing character traces, and the first successful model fit to continuity signal already present in the project.
+      </div>
+      <div class="meta">
+        <div class="box"><span class="label">Repo</span><code>assistant-PoE</code></div>
+        <div class="box"><span class="label">Benchmark</span><code>character continuity ranking</code></div>
+        <div class="box"><span class="label">Primary Source</span><code>logs/stat_watch/*_history.jsonl</code></div>
+        <div class="box"><span class="label">Artifacts</span><code>research/character_continuity_benchmark/</code></div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="card abstract">
+          <h3>Abstract</h3>
+          <p>
+            This paper documents the first direct application of our structured-reasoning research program to <code>assistant-PoE</code>. Rather than begin with synthetic gameplay labels, we built a benchmark from the repository’s own character traces. The task asks whether a model can identify the true immediate next state of a character from a mixed candidate set, using only the continuity structure already embedded in the project’s stat-watch logs.
+          </p>
+          <p>
+            We reconstructed cumulative state vectors from real <code>logs/stat_watch/*_history.jsonl</code> files, including 28 tracked numeric stats and 16 gear-slot occupancy signals. These states were assembled into train and evaluation ranking problems with same-character and cross-character distractors. We then compared a hand-built heuristic continuity baseline to a learned neural ranker.
+          </p>
+          <p>
+            The benchmark contains 20 reconstructed states across 3 characters, producing 12 training anchors and 5 held-out evaluation anchors. On this benchmark, the heuristic achieved <strong>top-1 accuracy 0.80</strong> and <strong>MRR 0.85</strong>, while the learned model achieved <strong>top-1 accuracy 1.00</strong> and <strong>MRR 1.00</strong>. The dataset is small and the result is preliminary, but it demonstrates a crucial point: <code>assistant-PoE</code> already contains enough structured temporal signal to support trainable character-intelligence experiments.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Headline Findings</h3>
+          <div class="scores">
+            <div class="score">
+              <div class="num">20</div>
+              <div class="cap">Reconstructed states</div>
+            </div>
+            <div class="score">
+              <div class="num">0.80</div>
+              <div class="cap">Heuristic top-1 eval</div>
+            </div>
+            <div class="score">
+              <div class="num">1.00</div>
+              <div class="cap">Learned top-1 eval</div>
+            </div>
+          </div>
+          <div class="callout">
+            The key result is not just that a small model fit the benchmark. It is that the repository already contained enough durable, character-scoped structure to make such a benchmark possible.
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>1. Context</h2>
+        <div class="two-col">
+          <div class="card">
+            <h3>Repository Thesis</h3>
+            <p>
+              The retrospective already argued that <code>assistant-PoE</code> is a character-centered intelligence system rather than a loose pile of scripts. Its strongest claim is that a character should be treated as a living memory object, not a temporary API payload.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Research Goal</h3>
+            <p>
+              We wanted to see whether that claim could be turned into a trainable benchmark using only data that already exists in the repo. In other words: can the repository’s own traces act as supervision?
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>2. Application Strategy</h2>
+        <div class="diagram">
+          <div class="flow">
+            <div class="node"><strong>Repo Thesis</strong><br>character as living object</div>
+            <div class="arrow">→</div>
+            <div class="node"><strong>Trace Source</strong><br><code>stat_watch</code> histories</div>
+            <div class="arrow">→</div>
+            <div class="node"><strong>Benchmark</strong><br>true-next-state ranking</div>
+            <div class="arrow">→</div>
+            <div class="node"><strong>Model Fit</strong><br>heuristic vs neural ranker</div>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Step</th>
+                <th>Decision</th>
+                <th>Reason</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Use existing logs</td>
+                <td><code>logs/stat_watch/*_history.jsonl</code></td>
+                <td>These are the richest repo-native chronological traces already present.</td>
+              </tr>
+              <tr>
+                <td>Reconstruct cumulative states</td>
+                <td>Apply each row as a state update</td>
+                <td>The project’s core intelligence object is the evolving character, not isolated deltas.</td>
+              </tr>
+              <tr>
+                <td>Define a continuity task</td>
+                <td>Rank the true next state highest</td>
+                <td>This tests whether continuity structure is learnable before asking for open-ended advice.</td>
+              </tr>
+              <tr>
+                <td>Compare against heuristic</td>
+                <td>Minimal-delta same-character baseline</td>
+                <td>A fair result needs to beat something stronger than chance.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2>3. Benchmark Construction</h2>
+        <div class="three-col">
+          <div class="card">
+            <h3>Input Data</h3>
+            <p>Real stat-watch histories from 3 characters with usable traces.</p>
+          </div>
+          <div class="card">
+            <h3>State Vector</h3>
+            <p>28 numeric stats + 16 gear-slot occupancy features.</p>
+          </div>
+          <div class="card">
+            <h3>Task Shape</h3>
+            <p>Anchor state, true next state, and distractor candidates.</p>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Benchmark Summary</th>
+                <th>Count</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Characters with usable continuity traces</td><td>3</td></tr>
+              <tr><td>Reconstructed cumulative states</td><td>20</td></tr>
+              <tr><td>Training anchors</td><td>12</td></tr>
+              <tr><td>Held-out eval anchors</td><td>5</td></tr>
+              <tr><td>Training pair examples</td><td>78</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <h3>Core Files</h3>
+          <ul>
+            <li><code>research/character_continuity_benchmark/build_benchmark.py</code></li>
+            <li><code>research/character_continuity_benchmark/train_ranker.py</code></li>
+            <li><code>research/character_continuity_benchmark/generated/continuity_benchmark.json</code></li>
+            <li><code>research/character_continuity_benchmark/generated/results.json</code></li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>4. Baselines and Model</h2>
+        <div class="two-col">
+          <div class="card">
+            <h3>Heuristic Baseline</h3>
+            <p>
+              The heuristic prefers:
+            </p>
+            <ul>
+              <li>same-character candidates,</li>
+              <li>small cumulative stat change,</li>
+              <li>small positive time delta.</li>
+            </ul>
+            <p>
+              This makes it a strong continuity prior rather than a dummy baseline.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Learned Ranker</h3>
+            <p>
+              The neural model is a small MLP over anchor-candidate pair features derived from:
+            </p>
+            <ul>
+              <li>anchor stats,</li>
+              <li>candidate stats,</li>
+              <li>signed and absolute deltas,</li>
+              <li>slot occupancy transitions,</li>
+              <li>same-character indicator,</li>
+              <li>time-delta features.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>5. Results</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Top-1 Accuracy</th>
+                <th>MRR</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Heuristic continuity baseline</td>
+                <td>0.80</td>
+                <td>0.85</td>
+              </tr>
+              <tr>
+                <td>Learned pairwise ranker</td>
+                <td>1.00</td>
+                <td>1.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="two-col">
+          <div class="card">
+            <h3>Held-Out Eval Performance</h3>
+            <div class="bars">
+              <div class="bar-row"><div>Heuristic Top-1</div><div class="track"><div class="fill gold" style="width:80%"></div></div><div>0.80</div></div>
+              <div class="bar-row"><div>Model Top-1</div><div class="track"><div class="fill" style="width:100%"></div></div><div>1.00</div></div>
+              <div class="bar-row"><div>Heuristic MRR</div><div class="track"><div class="fill gold" style="width:85%"></div></div><div>0.85</div></div>
+              <div class="bar-row"><div>Model MRR</div><div class="track"><div class="fill" style="width:100%"></div></div><div>1.00</div></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Optimization Trace</h3>
+            <div class="bars">
+              <div class="bar-row"><div>Loss @ epoch 25</div><div class="track"><div class="fill red" style="width:77%"></div></div><div>0.1549</div></div>
+              <div class="bar-row"><div>Loss @ epoch 200</div><div class="track"><div class="fill red" style="width:72%"></div></div><div>0.1440</div></div>
+              <div class="bar-row"><div>Loss @ epoch 400</div><div class="track"><div class="fill red" style="width:64%"></div></div><div>0.1287</div></div>
+            </div>
+            <p>
+              The loss curve is modest but steady, which is what we want from a tiny-data traction probe rather than a noisy collapse.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>6. Interpretation</h2>
+        <div class="callout">
+          The most important outcome is not that a small model reached perfect held-out ranking on a tiny benchmark. The important outcome is that the repository’s own traces were structured enough to support a trainable benchmark in the first place.
+        </div>
+
+        <div class="three-col">
+          <div class="card">
+            <h3>What This Shows</h3>
+            <ul>
+              <li>Character continuity is measurable.</li>
+              <li>The repo already contains learnable temporal structure.</li>
+              <li>A learned model can beat a strong heuristic baseline.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>What It Does Not Show</h3>
+            <ul>
+              <li>Broad PoE competence.</li>
+              <li>Reliable action planning.</li>
+              <li>General long-horizon decision quality.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Why It Matters</h3>
+            <ul>
+              <li>The project can now support empirical learning loops.</li>
+              <li>The character-centered thesis is experimentally actionable.</li>
+              <li>The repo has crossed from “tooling” into benchmarkable intelligence.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>7. Limitations</h2>
+        <div class="two-col">
+          <div class="card">
+            <h3>Data Scale</h3>
+            <p>
+              This is a smoke-scale benchmark with only 20 reconstructed states and 5 held-out eval anchors. It is valuable as a traction probe, not as a definitive claim.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Eval Shape</h3>
+            <p>
+              The current held-out slice is narrow and continuity-focused. Future versions need harder negatives, more characters, and additional modalities such as market-sync and journal events.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>8. Next Steps</h2>
+        <div class="two-col">
+          <div class="card">
+            <h3>Immediate</h3>
+            <ul>
+              <li>Expand the continuity benchmark with archived snapshots and future stat-watch runs.</li>
+              <li>Add journal and market-sync events as additional supervision.</li>
+              <li>Construct harder same-character distractors.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>After Stabilization</h3>
+            <ul>
+              <li>Build a second task such as <code>state → next action prompt</code>.</li>
+              <li>Test retrieval-augmented or graph-based models over character memory.</li>
+              <li>Use larger Kaggle GPUs/TPUs once the benchmark contract is stronger.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>9. Conclusion</h2>
+        <div class="card">
+          <p>
+            This experiment is the first serious application of our structured-reasoning work to <code>assistant-PoE</code>, and it succeeded in the way that matters most: it found real signal in the traces the project already produces and converted that signal into a benchmark a model could learn.
+          </p>
+          <p>
+            That changes the status of the repository. <code>assistant-PoE</code> is no longer just a collection of character-aware utilities. It is now demonstrably a source of trainable character-continuity data.
+          </p>
+        </div>
+      </section>
+
+      <div class="footer">
+        Published into <code>docs/research/</code> alongside the repository retrospective. All quantitative claims in this paper are grounded in the generated artifacts under <code>research/character_continuity_benchmark/</code>.
+      </div>
+    </main>
+  </article>
+</body>
+</html>

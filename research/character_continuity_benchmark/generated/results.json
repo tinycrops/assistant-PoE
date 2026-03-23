@@ -1,0 +1,233 @@
+{
+  "summary": {
+    "dataset": "/home/ath/Desktop/assistant-PoE/research/character_continuity_benchmark/generated/continuity_benchmark.json",
+    "device": "cpu",
+    "epochs": 400,
+    "hidden_dim": 128,
+    "lr": 0.001,
+    "train_pair_count": 78,
+    "eval_anchor_count": 5,
+    "history": [
+      {
+        "epoch": 25,
+        "loss": 0.1548784226179123
+      },
+      {
+        "epoch": 50,
+        "loss": 0.15341702103614807
+      },
+      {
+        "epoch": 75,
+        "loss": 0.15227261185646057
+      },
+      {
+        "epoch": 100,
+        "loss": 0.15105251967906952
+      },
+      {
+        "epoch": 125,
+        "loss": 0.14961136877536774
+      },
+      {
+        "epoch": 150,
+        "loss": 0.14790073037147522
+      },
+      {
+        "epoch": 175,
+        "loss": 0.14592447876930237
+      },
+      {
+        "epoch": 200,
+        "loss": 0.14397753775119781
+      },
+      {
+        "epoch": 225,
+        "loss": 0.1418522298336029
+      },
+      {
+        "epoch": 250,
+        "loss": 0.13999195396900177
+      },
+      {
+        "epoch": 275,
+        "loss": 0.13836809992790222
+      },
+      {
+        "epoch": 300,
+        "loss": 0.13648822903633118
+      },
+      {
+        "epoch": 325,
+        "loss": 0.1346825361251831
+      },
+      {
+        "epoch": 350,
+        "loss": 0.1326049417257309
+      },
+      {
+        "epoch": 375,
+        "loss": 0.13066667318344116
+      },
+      {
+        "epoch": 400,
+        "loss": 0.1287480890750885
+      }
+    ],
+    "heuristic_eval": {
+      "top1_accuracy": 0.8,
+      "mrr": 0.85
+    },
+    "model_eval": {
+      "top1_accuracy": 1.0,
+      "mrr": 1.0
+    },
+    "train_eval": {
+      "top1_accuracy": 0.75,
+      "mrr": 0.8402777777777777
+    }
+  },
+  "heuristic_rows": [
+    {
+      "anchor_id": "collabwitch_codex:010",
+      "positive_id": "collabwitch_codex:011",
+      "rank_of_true_next": 1,
+      "ranked_candidate_ids": [
+        "collabwitch_codex:011",
+        "collabwitch_codex:000",
+        "collabwitch_codex:001",
+        "collabwitch_codex:002",
+        "jungfub:000",
+        "jungfub:001",
+        "jungfubtoo:000"
+      ]
+    },
+    {
+      "anchor_id": "collabwitch_codex:011",
+      "positive_id": "collabwitch_codex:012",
+      "rank_of_true_next": 1,
+      "ranked_candidate_ids": [
+        "collabwitch_codex:012",
+        "collabwitch_codex:000",
+        "collabwitch_codex:001",
+        "collabwitch_codex:002",
+        "jungfub:000",
+        "jungfub:001",
+        "jungfubtoo:000"
+      ]
+    },
+    {
+      "anchor_id": "collabwitch_codex:012",
+      "positive_id": "collabwitch_codex:013",
+      "rank_of_true_next": 1,
+      "ranked_candidate_ids": [
+        "collabwitch_codex:013",
+        "collabwitch_codex:000",
+        "collabwitch_codex:001",
+        "collabwitch_codex:002",
+        "jungfub:000",
+        "jungfub:001",
+        "jungfubtoo:000"
+      ]
+    },
+    {
+      "anchor_id": "collabwitch_codex:013",
+      "positive_id": "collabwitch_codex:014",
+      "rank_of_true_next": 1,
+      "ranked_candidate_ids": [
+        "collabwitch_codex:014",
+        "collabwitch_codex:000",
+        "collabwitch_codex:001",
+        "collabwitch_codex:002",
+        "jungfub:000",
+        "jungfub:001",
+        "jungfubtoo:000"
+      ]
+    },
+    {
+      "anchor_id": "collabwitch_codex:014",
+      "positive_id": "collabwitch_codex:015",
+      "rank_of_true_next": 4,
+      "ranked_candidate_ids": [
+        "collabwitch_codex:000",
+        "collabwitch_codex:001",
+        "collabwitch_codex:002",
+        "collabwitch_codex:015",
+        "jungfub:000",
+        "jungfub:001",
+        "jungfubtoo:000"
+      ]
+    }
+  ],
+  "model_rows": [
+    {
+      "anchor_id": "collabwitch_codex:010",
+      "positive_id": "collabwitch_codex:011",
+      "rank_of_true_next": 1,
+      "ranked_candidate_ids": [
+        "collabwitch_codex:011",
+        "jungfubtoo:000",
+        "collabwitch_codex:002",
+        "collabwitch_codex:001",
+        "collabwitch_codex:000",
+        "jungfub:001",
+        "jungfub:000"
+      ]
+    },
+    {
+      "anchor_id": "collabwitch_codex:011",
+      "positive_id": "collabwitch_codex:012",
+      "rank_of_true_next": 1,
+      "ranked_candidate_ids": [
+        "collabwitch_codex:012",
+        "jungfubtoo:000",
+        "collabwitch_codex:002",
+        "collabwitch_codex:001",
+        "collabwitch_codex:000",
+        "jungfub:001",
+        "jungfub:000"
+      ]
+    },
+    {
+      "anchor_id": "collabwitch_codex:012",
+      "positive_id": "collabwitch_codex:013",
+      "rank_of_true_next": 1,
+      "ranked_candidate_ids": [
+        "collabwitch_codex:013",
+        "jungfubtoo:000",
+        "collabwitch_codex:002",
+        "collabwitch_codex:001",
+        "collabwitch_codex:000",
+        "jungfub:001",
+        "jungfub:000"
+      ]
+    },
+    {
+      "anchor_id": "collabwitch_codex:013",
+      "positive_id": "collabwitch_codex:014",
+      "rank_of_true_next": 1,
+      "ranked_candidate_ids": [
+        "collabwitch_codex:014",
+        "jungfubtoo:000",
+        "collabwitch_codex:002",
+        "collabwitch_codex:001",
+        "collabwitch_codex:000",
+        "jungfub:001",
+        "jungfub:000"
+      ]
+    },
+    {
+      "anchor_id": "collabwitch_codex:014",
+      "positive_id": "collabwitch_codex:015",
+      "rank_of_true_next": 1,
+      "ranked_candidate_ids": [
+        "collabwitch_codex:015",
+        "jungfubtoo:000",
+        "collabwitch_codex:002",
+        "collabwitch_codex:001",
+        "collabwitch_codex:000",
+        "jungfub:001",
+        "jungfub:000"
+      ]
+    }
+  ]
+}

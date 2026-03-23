@@ -153,6 +153,13 @@ python3 weighted_trade_search.py \
 - Full progression notes for today’s run are in:
   - `docs/session-2026-02-21-level1-to-act2.md`
 
+## Research Papers
+
+- Published research shelf:
+  - `docs/research/index.html`
+- Expected GitHub Pages URL after deploy:
+  - `https://tinycrops.github.io/assistant-PoE/`
+
 ## Character Context
 
 - `defaults.env` defines the active character Codex should operate against.

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assistant-PoE Research</title>
+  <style>
+    :root {
+      --bg: #f5efe4;
+      --paper: #fffaf2;
+      --ink: #1b1713;
+      --muted: #6f655a;
+      --accent: #9c4f1d;
+      --accent-2: #215b75;
+      --line: #dbcdbc;
+      --shadow: 0 28px 80px rgba(49, 30, 10, 0.14);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Palatino Linotype", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(156, 79, 29, 0.12), transparent 28%),
+        radial-gradient(circle at top right, rgba(33, 91, 117, 0.12), transparent 24%),
+        linear-gradient(180deg, #f2e9dc 0%, #f8f3ea 100%);
+    }
+
+    .shell {
+      width: min(1120px, calc(100vw - 32px));
+      margin: 24px auto 40px;
+    }
+
+    .hero {
+      padding: 42px 40px 28px;
+      border: 1px solid rgba(156, 79, 29, 0.18);
+      border-radius: 28px;
+      background:
+        linear-gradient(135deg, rgba(255, 250, 242, 0.95), rgba(245, 235, 220, 0.94));
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font: 700 0.82rem/1.4 "Trebuchet MS", "Gill Sans", sans-serif;
+      color: var(--accent);
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(2.4rem, 4.5vw, 4.6rem);
+      line-height: 0.95;
+      max-width: 12ch;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 72ch;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.65;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .card {
+      padding: 26px 24px 24px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255, 250, 242, 0.92);
+      box-shadow: var(--shadow);
+    }
+
+    .card .tag {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(156, 79, 29, 0.1);
+      color: var(--accent);
+      font: 700 0.78rem/1 "Trebuchet MS", "Gill Sans", sans-serif;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .card h2 {
+      margin: 0 0 10px;
+      font-size: 1.7rem;
+      line-height: 1.08;
+    }
+
+    .card p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .links a {
+      text-decoration: none;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(27, 23, 19, 0.14);
+      color: var(--ink);
+      background: white;
+      font: 600 0.95rem/1.2 "Trebuchet MS", "Gill Sans", sans-serif;
+    }
+
+    .links a.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff9f1;
+    }
+
+    .panel {
+      margin-top: 22px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255, 250, 242, 0.9);
+      box-shadow: var(--shadow);
+    }
+
+    .panel h2 {
+      margin: 0 0 12px;
+      font-size: 1.5rem;
+    }
+
+    .panel ul {
+      margin: 0;
+      padding-left: 20px;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    code {
+      padding: 0.12rem 0.35rem;
+      border-radius: 6px;
+      background: rgba(33, 91, 117, 0.09);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.92em;
+      color: var(--accent-2);
+    }
+
+    @media (max-width: 860px) {
+      .shell {
+        width: min(100vw - 20px, 100%);
+        margin: 10px auto 26px;
+      }
+
+      .hero, .card, .panel {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <section class="hero">
+      <p class="eyebrow">Assistant-PoE Research Archive</p>
+      <h1>Character-Centered Intelligence Papers</h1>
+      <p>
+        This local research shelf collects the major papers produced inside <code>assistant-PoE</code> so far:
+        the retrospective thesis about the repo itself, and the first applied benchmark paper showing that
+        existing character traces can already support trainable continuity modeling.
+      </p>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <div class="tag">March 22, 2026</div>
+        <h2>Assistant-PoE as a Character-Centered Intelligence System</h2>
+        <p>
+          The retrospective paper that argues the repository has already become more than a pile of scripts:
+          it maintains persistent character state, grounded observations, market context, and action-oriented outputs.
+        </p>
+        <div class="links">
+          <a class="primary" href="./repo-retrospective-2026-03-22.html">Read HTML</a>
+          <a href="./repo-retrospective-2026-03-22.md">Read Markdown</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="tag">March 23, 2026</div>
+        <h2>Applying Character-Centered Reasoning Research to Assistant-PoE</h2>
+        <p>
+          The first applied paper. It introduces the repo-native character continuity benchmark, trains a small
+          neural ranker on existing trace data, and shows an initial learned fit over held-out next-state ranking.
+        </p>
+        <div class="links">
+          <a class="primary" href="./continuity-benchmark-application-2026-03-23.html">Read HTML</a>
+          <a href="./continuity-benchmark-application-2026-03-23.md">Read Markdown</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel">
+      <h2>Research Artifact Links</h2>
+      <ul>
+        <li>Benchmark code: <code>research/character_continuity_benchmark/build_benchmark.py</code></li>
+        <li>Training code: <code>research/character_continuity_benchmark/train_ranker.py</code></li>
+        <li>Generated dataset: <code>research/character_continuity_benchmark/generated/continuity_benchmark.json</code></li>
+        <li>Measured results: <code>research/character_continuity_benchmark/generated/results.json</code></li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

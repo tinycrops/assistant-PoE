@@ -1,0 +1,990 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Assistant-PoE Research Paper</title>
+  <meta name="color-scheme" content="dark light" />
+  <style>
+    :root {
+      --bg: #f4efe4;
+      --paper: #fffaf1;
+      --ink: #1d1a17;
+      --muted: #6b6258;
+      --accent: #914d1f;
+      --accent-soft: #ead8c5;
+      --line: #d8c8b6;
+      --code-bg: #2a241f;
+      --code-ink: #f6ead9;
+      --quote: #f1e4d4;
+      --shadow: 0 24px 80px rgba(73, 42, 19, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(211, 149, 88, 0.16), transparent 28%),
+        radial-gradient(circle at top right, rgba(129, 65, 27, 0.12), transparent 24%),
+        linear-gradient(180deg, #efe5d6 0%, #f7f2ea 24%, #f3ecdf 100%);
+      font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+      line-height: 1.6;
+    }
+
+    .shell {
+      width: min(1120px, calc(100vw - 32px));
+      margin: 24px auto 48px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 40px 42px 28px;
+      border: 1px solid rgba(145, 77, 31, 0.18);
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at 85% 15%, rgba(145, 77, 31, 0.16), transparent 18%),
+        linear-gradient(140deg, rgba(255, 250, 241, 0.96), rgba(246, 236, 220, 0.96));
+      box-shadow: var(--shadow);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -10% -40% auto;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(145, 77, 31, 0.12), transparent 68%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--accent);
+      font-family: "Trebuchet MS", "Gill Sans", sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2.3rem, 4vw, 4.2rem);
+      line-height: 0.98;
+      max-width: 12ch;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 70ch;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .paper {
+      margin-top: 22px;
+      padding: 34px 42px 48px;
+      border: 1px solid rgba(145, 77, 31, 0.14);
+      border-radius: 24px;
+      background: color-mix(in srgb, var(--paper) 94%, white 6%);
+      box-shadow: var(--shadow);
+    }
+
+    .paper > *:first-child {
+      margin-top: 0;
+    }
+
+    h1, h2, h3, h4 {
+      color: #251d16;
+      line-height: 1.14;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin: 0 0 18px;
+    }
+
+    h2 {
+      margin-top: 2.4rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--line);
+      font-size: 1.65rem;
+    }
+
+    h3 {
+      margin-top: 1.6rem;
+      font-size: 1.18rem;
+    }
+
+    p, li {
+      font-size: 1.04rem;
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    strong {
+      color: #2b2016;
+    }
+
+    blockquote {
+      margin: 1.4rem 0;
+      padding: 0.9rem 1.1rem;
+      border-left: 4px solid var(--accent);
+      background: var(--quote);
+      border-radius: 0 12px 12px 0;
+    }
+
+    code {
+      padding: 0.15rem 0.35rem;
+      border-radius: 6px;
+      background: rgba(145, 77, 31, 0.09);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.92em;
+    }
+
+    pre {
+      overflow-x: auto;
+      padding: 1rem 1.1rem;
+      border-radius: 16px;
+      background: var(--code-bg);
+      color: var(--code-ink);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    pre code {
+      padding: 0;
+      background: transparent;
+      color: inherit;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.2rem 0 1.5rem;
+      background: rgba(255, 253, 248, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+      display: block;
+    }
+
+    thead, tbody {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+    }
+
+    th, td {
+      padding: 0.8rem 0.9rem;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--accent);
+      background: rgba(145, 77, 31, 0.08);
+      font-family: "Trebuchet MS", "Gill Sans", sans-serif;
+      letter-spacing: 0.02em;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid var(--line);
+      margin: 2rem 0;
+    }
+
+    .mermaid {
+      margin: 1.3rem 0 1.6rem;
+      padding: 1rem;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255, 250, 241, 0.95), rgba(243, 236, 223, 0.95));
+      overflow-x: auto;
+    }
+
+    .footer {
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      text-align: center;
+    }
+
+    @media (max-width: 820px) {
+      .shell {
+        width: min(100vw - 20px, 100%);
+        margin: 10px auto 28px;
+      }
+
+      .hero,
+      .paper {
+        padding: 22px 18px 26px;
+        border-radius: 20px;
+      }
+
+      .hero h1 {
+        max-width: none;
+      }
+    }
+  </style>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      themeVariables: {
+        primaryColor: "#f4e4d0",
+        primaryTextColor: "#241a14",
+        primaryBorderColor: "#9a5829",
+        lineColor: "#7e5a40",
+        secondaryColor: "#ead5be",
+        tertiaryColor: "#f9f3e8",
+        background: "#fffaf1",
+        fontFamily: "Georgia, serif"
+      }
+    });
+  </script>
+</head>
+<body>
+  <div class="shell">
+    <section class="hero">
+      <p class="eyebrow">Local Research Edition</p>
+      <h1>Character-Centered Intelligence</h1>
+      <p>A styled local-network edition of the repo retrospective, covering how this project evolved from scattered automation into a living character-memory and decision-support system.</p>
+    </section>
+    <main class="paper">
+      <h1 id="assistant-poe-as-a-character-centered-intelligence-system">Assistant-PoE as a Character-Centered Intelligence System</h1>
+      <h2 id="a-retrospective-research-report-on-what-this-repository-has-already-built">A Retrospective Research Report on What This Repository Has Already Built</h2>
+      <p><strong>Date:</strong> 2026-03-22<br>
+      <strong>Repository:</strong> <code>assistant-PoE</code><br>
+      <strong>Primary framing:</strong> every system in this repo exists to improve a specific player character<br>
+      <strong>Current active default character:</strong> <code>PhysicalDamage</code> (<code>tinycrops#3233</code>, <code>Mirage</code>, <code>pc</code>) via <code>defaults.env</code></p>
+      <h2 id="abstract">Abstract</h2>
+      <p>This repository has already crossed the line from "a pile of scripts" into a character-centered operating system for Path of Exile play. Its implemented capabilities now span live account ingestion, headless Path of Building stat extraction, per-character memory ledgers, market valuation, trade-query generation, Discord-facing memory publication, and OpenAI-backed build reporting with observability artifacts.</p>
+      <p>The most important architectural achievement is not any individual command. It is the emergence of a feedback loop in which a character becomes a durable object with memory, snapshots, observations, milestones, and next actions. In this repo, the character is treated as an evolving report card of player understanding rather than as a temporary API payload. That change in viewpoint has already shaped the codebase, the data model, and the outputs.</p>
+      <p>This report documents what has been built so far, how the parts fit together, where the evidence lives on disk, and what design direction is already visible in the current implementation.</p>
+      <h2 id="executive-summary">Executive Summary</h2>
+      <h3 id="what-exists-today">What exists today</h3>
+      <ul>
+      <li>Live Path of Exile account and character retrieval</li>
+      <li>Headless Path of Building snapshot extraction and panel-stat differencing</li>
+      <li>Durable character ledgers under <code>characters/&lt;slug&gt;/ledger.json</code></li>
+      <li>Append-only journals for character events</li>
+      <li>Archived stat-watch artifacts for reproducibility</li>
+      <li>Market valuation using <code>poe.ninja</code></li>
+      <li>Trade API search with rate-limit telemetry</li>
+      <li>Discord publication for <code>LOG</code>, <code>LEARN</code>, and <code>NEXT</code></li>
+      <li>OpenAI-generated build intelligence cards with observability traces</li>
+      <li>A growing multi-character dataset spanning progression, gear shifts, and economic state</li>
+      </ul>
+      <h3 id="what-is-novel-here">What is novel here</h3>
+      <ul>
+      <li>The repo does not just answer questions about a character; it maintains continuity of understanding over time.</li>
+      <li>Headless PoB is used as a gating truth source for progression-sensitive trade advice.</li>
+      <li>The ledger unifies live API facts, derived stats, market facts, and action prompts into one character memory object.</li>
+      <li>Generated outputs are increasingly auditable through run artifacts, JSONL logs, and archive snapshots.</li>
+      </ul>
+      <h2 id="system-thesis">System Thesis</h2>
+      <p>The central thesis embodied by this codebase is:</p>
+      <blockquote>
+      <p>A Path of Exile character should be modeled as a living intelligence object, not merely a current-state snapshot.</p>
+      </blockquote>
+      <p>That thesis appears repeatedly in the implementation:</p>
+      <ul>
+      <li><code>defaults.env</code> defines the active character context.</li>
+      <li><code>poe_stat_watch.py</code> refreshes state from live account data and headless PoB.</li>
+      <li><code>character_ledger.py</code> preserves persistent memory per character.</li>
+      <li><code>weighted_trade_search.py</code> refuses progression-sensitive searches when the PoB basis is stale.</li>
+      <li>Market outputs become action prompts, not just valuation tables.</li>
+      <li>Discord and build cards externalize the repo's internal understanding into reusable human-facing artifacts.</li>
+      </ul>
+      <h2 id="research-questions">Research Questions</h2>
+      <p>This report evaluates the repository against four practical questions:</p>
+      <ol>
+      <li>Has the project achieved character persistence rather than one-shot automation?</li>
+      <li>Has it connected gameplay state to actionable economic and gearing decisions?</li>
+      <li>Has it made model-assisted analysis reproducible enough to trust and iterate?</li>
+      <li>Has the repo structure begun to reflect a coherent product, even before formal reorganization?</li>
+      </ol>
+      <h2 id="method-and-evidence-base">Method and Evidence Base</h2>
+      <p>This report is based on direct inspection of the current repository structure, implementation modules, ledgers, logs, and existing docs.</p>
+      <h3 id="primary-code-artifacts-inspected">Primary code artifacts inspected</h3>
+      <table>
+      <thead>
+      <tr>
+      <th>Area</th>
+      <th>Evidence</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+      <td>Live character intake</td>
+      <td><code>poe_character_sync.py</code></td>
+      </tr>
+      <tr>
+      <td>PoB-backed stat snapshots</td>
+      <td><code>poe_stat_watch.py</code></td>
+      </tr>
+      <tr>
+      <td>Character memory model</td>
+      <td><code>character_ledger.py</code></td>
+      </tr>
+      <tr>
+      <td>Market sync</td>
+      <td><code>poe_market_pipeline.py</code></td>
+      </tr>
+      <tr>
+      <td>Trade execution</td>
+      <td><code>trade_api.py</code>, <code>weighted_trade_search.py</code></td>
+      </tr>
+      <tr>
+      <td>Persona publishing</td>
+      <td><code>discord_persona_sender/discord_persona_sender.py</code></td>
+      </tr>
+      <tr>
+      <td>Build reporting</td>
+      <td><code>openai_build_intel_card.py</code>, <code>post_build_intel_card.py</code></td>
+      </tr>
+      <tr>
+      <td>Observability</td>
+      <td><code>observability/</code>, <code>observability_viewer.py</code></td>
+      </tr>
+      <tr>
+      <td>Historical narrative</td>
+      <td><code>README.md</code>, <code>docs/DISCORD_PERSONA_PIPELINE.md</code>, <code>docs/session-2026-02-21-level1-to-act2.md</code></td>
+      </tr>
+      </tbody>
+      </table>
+      <h3 id="current-repository-evidence-snapshot">Current repository evidence snapshot</h3>
+      <table>
+      <thead>
+      <tr>
+      <th>Metric</th>
+      <th style="text-align: right;">Count</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+      <td>Characters with ledgers</td>
+      <td style="text-align: right;">4</td>
+      </tr>
+      <tr>
+      <td>Character journals</td>
+      <td style="text-align: right;">4</td>
+      </tr>
+      <tr>
+      <td>Build-intel run artifacts</td>
+      <td style="text-align: right;">4</td>
+      </tr>
+      <tr>
+      <td>Archived stat-watch files</td>
+      <td style="text-align: right;">9</td>
+      </tr>
+      <tr>
+      <td>Trade rate-limit events logged</td>
+      <td style="text-align: right;">46</td>
+      </tr>
+      <tr>
+      <td>Discord publish log entries</td>
+      <td style="text-align: right;">10</td>
+      </tr>
+      </tbody>
+      </table>
+      <h2 id="high-level-architecture">High-Level Architecture</h2>
+      <div class="mermaid">flowchart TD
+          A[Player Intent] --&gt; B[defaults.env active character]
+          B --&gt; C[Live PoE account endpoints]
+          C --&gt; D[poe_character_sync.py]
+          D --&gt; E[poe_stat_watch.py]
+          E --&gt; F[Headless Path of Building]
+          F --&gt; G[Panel stat extraction + deltas]
+          G --&gt; H[character_ledger.py]
+          D --&gt; H
+          H --&gt; I[characters/&lt;slug&gt;/ledger.json]
+          H --&gt; J[characters/&lt;slug&gt;/journal.jsonl]
+      
+          D --&gt; K[poe_market_pipeline.py]
+          K --&gt; L[poe.ninja prices]
+          L --&gt; H
+          H --&gt; M[LOG / LEARN / NEXT]
+          M --&gt; N[Discord]
+      
+          H --&gt; O[weighted_trade_search.py]
+          O --&gt; P[Trade API]
+          P --&gt; Q[Canonical trade links + listings]
+      
+          H --&gt; R[openai_build_intel_card.py]
+          R --&gt; S[OpenAI Responses API]
+          S --&gt; T[Build card artifacts]
+          T --&gt; U[observability_viewer.py]
+      </div>
+      <h2 id="repository-morphology">Repository Morphology</h2>
+      <p>Even before cleanup, the repo already clusters into several meaningful layers.</p>
+      <div class="mermaid">graph TD
+          ROOT[assistant-PoE]
+          ROOT --&gt; A[Root workflow scripts]
+          ROOT --&gt; B[characters]
+          ROOT --&gt; C[logs]
+          ROOT --&gt; D[docs]
+          ROOT --&gt; E[skills]
+          ROOT --&gt; F[observability]
+          ROOT --&gt; G[discord_persona_sender]
+          ROOT --&gt; H[live_api]
+          ROOT --&gt; I[Embedded upstream tools]
+      
+          I --&gt; I1[PathOfBuilding]
+          I --&gt; I2[awakened-poe-trade]
+          I --&gt; I3[pob-mcp]
+      </div>
+      <h3 id="interpretation">Interpretation</h3>
+      <p>This layout is messy at the root, but not random. The current sprawl is actually a sign of growth:</p>
+      <ul>
+      <li>root Python files represent operational entrypoints</li>
+      <li><code>characters/</code> contains durable identity-scoped memory</li>
+      <li><code>logs/</code> contains generated evidence and telemetry</li>
+      <li><code>skills/</code> contains procedural expertise</li>
+      <li>embedded upstream repos show a deliberate strategy of bringing proven game tooling into the same workspace</li>
+      </ul>
+      <p>The reorganization should therefore clarify existing domains, not invent them.</p>
+      <h2 id="the-character-as-the-unit-of-computation">The Character as the Unit of Computation</h2>
+      <p>The strongest pattern in the codebase is that the character has become the main computational unit.</p>
+      <h3 id="character-memory-model">Character memory model</h3>
+      <p>Each character ledger already contains a surprisingly rich object:</p>
+      <ul>
+      <li>identity</li>
+      <li>account and realm linkage</li>
+      <li>league and class metadata</li>
+      <li>latest live confirmation timestamp</li>
+      <li>latest PoB-backed snapshot</li>
+      <li>latest market snapshot</li>
+      <li>observations</li>
+      <li>milestones</li>
+      <li>source file paths</li>
+      <li>optional snapshot history</li>
+      </ul>
+      <div class="mermaid">classDiagram
+          class CharacterLedger {
+              schema_version
+              character
+              active_context
+              latest_snapshot
+              latest_market
+              latest_observations
+              milestones
+              sources
+              updated_at_utc
+              snapshot_history
+          }
+      
+          class Character {
+              name
+              slug
+              account
+              realm
+              league
+              class
+              level
+              last_live_confirmed_at_utc
+          }
+      
+          class Snapshot {
+              captured_at_utc
+              stats
+              inventory_counts
+              equipped_changes
+              top_stat_changes
+              artifacts
+          }
+      
+          class MarketState {
+              generated_at_utc
+              pricing_summary
+              posts
+          }
+      
+          CharacterLedger --&gt; Character
+          CharacterLedger --&gt; Snapshot
+          CharacterLedger --&gt; MarketState
+      </div>
+      <h3 id="why-this-matters">Why this matters</h3>
+      <p>This is the difference between:</p>
+      <ul>
+      <li>"fetching a character"</li>
+      <li>and "maintaining a remembered evolving character"</li>
+      </ul>
+      <p>That distinction is the foundation for everything else in the repo.</p>
+      <h2 id="workflow-1-live-character-ingestion">Workflow 1: Live Character Ingestion</h2>
+      <p><code>poe_character_sync.py</code> implements the account-facing intake layer.</p>
+      <h3 id="what-it-does">What it does</h3>
+      <ul>
+      <li>normalizes account names across realms</li>
+      <li>queries <code>character-window/get-characters</code></li>
+      <li>resolves canonical account naming</li>
+      <li>optionally fetches passive skills</li>
+      <li>optionally fetches items</li>
+      <li>supports <code>POESESSID</code> when privacy blocks public access</li>
+      <li>includes an onboarding flow that mirrors how a real player would authenticate and select a character</li>
+      </ul>
+      <h3 id="research-significance">Research significance</h3>
+      <p>This file establishes that the project is not operating from hand-entered build fantasies. It is grounded in live account reality. The user’s actual character is the source object, and everything downstream is meant to inherit from that truth.</p>
+      <h2 id="workflow-2-headless-pob-stat-watch">Workflow 2: Headless PoB Stat Watch</h2>
+      <p><code>poe_stat_watch.py</code> is the most important bridge in the system because it converts live account state into mechanically meaningful build state.</p>
+      <h3 id="key-contributions">Key contributions</h3>
+      <ul>
+      <li>runs a headless PoB flow</li>
+      <li>extracts <code>offence</code>, <code>defence</code>, <code>misc</code>, and <code>charges</code></li>
+      <li>compares current extracted stats against the previous run</li>
+      <li>records equipped item changes</li>
+      <li>summarizes inventory footprint</li>
+      <li>archives immutable snapshot artifacts</li>
+      <li>updates the character ledger with observations and milestones</li>
+      </ul>
+      <h3 id="core-processing-pipeline">Core processing pipeline</h3>
+      <div class="mermaid">sequenceDiagram
+          participant U as User/Codex
+          participant SW as poe_stat_watch.py
+          participant API as PoE account API
+          participant POB as Headless PoB
+          participant FS as logs/stat_watch
+          participant L as character_ledger.py
+      
+          U-&gt;&gt;SW: run stat watch
+          SW-&gt;&gt;API: fetch character/items/stash context
+          API--&gt;&gt;SW: live payloads
+          SW-&gt;&gt;POB: import and calculate snapshot
+          POB--&gt;&gt;SW: panel stats + equipped mapping
+          SW-&gt;&gt;FS: write latest snapshot files
+          SW-&gt;&gt;FS: write archive snapshot files
+          SW-&gt;&gt;L: update latest_snapshot + milestones + observations
+          L--&gt;&gt;U: durable character memory refreshed
+      </div>
+      <h3 id="scientific-value-of-this-step">Scientific value of this step</h3>
+      <p>This is the point where the repo stops being a generic account scraper and becomes a build-analysis instrument. Headless PoB provides a consistent mechanical lens through which item swaps, level progression, and stat deltas can be interpreted.</p>
+      <h2 id="workflow-3-market-intelligence">Workflow 3: Market Intelligence</h2>
+      <p><code>poe_market_pipeline.py</code> attaches economic meaning to the character state.</p>
+      <h3 id="what-it-does_1">What it does</h3>
+      <ul>
+      <li>uses live item payloads</li>
+      <li>pulls current <code>poe.ninja</code> economy data</li>
+      <li>prices currency, uniques, and divination cards</li>
+      <li>estimates known value in chaos</li>
+      <li>computes coverage</li>
+      <li>turns that into <code>LOG</code>, <code>LEARN</code>, and <code>NEXT</code></li>
+      <li>writes the results back into character memory</li>
+      </ul>
+      <h3 id="market-flow">Market flow</h3>
+      <div class="mermaid">flowchart LR
+          A[Character items payload] --&gt; B[Market classifier]
+          B --&gt; C[Currency pricing]
+          B --&gt; D[Unique pricing]
+          B --&gt; E[Div card pricing]
+          C --&gt; F[Known-value estimate]
+          D --&gt; F
+          E --&gt; F
+          F --&gt; G[Top holdings]
+          G --&gt; H[LOG]
+          G --&gt; I[LEARN]
+          G --&gt; J[NEXT]
+          H --&gt; K[Ledger]
+          I --&gt; K
+          J --&gt; K
+      </div>
+      <h3 id="important-limitation-already-understood-by-the-code">Important limitation already understood by the code</h3>
+      <p>The system explicitly knows that rare gear is underpriced by this lightweight market layer. That self-awareness matters. The repo is not pretending to have solved all valuation problems; it knows its coverage boundaries and routes the user toward trade checks when needed.</p>
+      <h2 id="workflow-4-trade-as-a-controlled-action-not-just-search">Workflow 4: Trade as a Controlled Action, Not Just Search</h2>
+      <p><code>weighted_trade_search.py</code> and <code>trade_api.py</code> transform the repo from passive observation into active recommendation infrastructure.</p>
+      <h3 id="key-design-choices">Key design choices</h3>
+      <ul>
+      <li>searches are weighted, not just filter-based</li>
+      <li>search status defaults to <code>securable</code> rather than <code>online</code></li>
+      <li>the character’s live level and league are refreshed before building a query</li>
+      <li>stale headless PoB snapshots block progression-sensitive advice by default</li>
+      <li>trade API calls are rate-limited and logged</li>
+      </ul>
+      <h3 id="why-this-is-strong-design">Why this is strong design</h3>
+      <p>This is a notable repository-level insight:</p>
+      <blockquote>
+      <p>trade recommendations should not be allowed to outrun the freshness of the build understanding they are based on</p>
+      </blockquote>
+      <p>That rule is already encoded in the software. It is one of the clearest signs that the repo has a real internal philosophy rather than just a collection of utilities.</p>
+      <h3 id="trade-decision-guardrail">Trade decision guardrail</h3>
+      <div class="mermaid">flowchart TD
+          A[Need upgrade search] --&gt; B{Recent headless PoB snapshot?}
+          B -- No --&gt; C[Stop and refresh stat watch]
+          B -- Yes --&gt; D[Refresh live character metadata]
+          D --&gt; E[Build weighted trade query]
+          E --&gt; F[Post trade search]
+          F --&gt; G[Fetch top listings]
+          G --&gt; H[Return canonical link + summaries]
+      </div>
+      <h2 id="workflow-5-externalized-memory-through-discord">Workflow 5: Externalized Memory Through Discord</h2>
+      <p>The Discord persona subsystem converts internal state into socialized memory.</p>
+      <h3 id="why-this-matters_1">Why this matters</h3>
+      <p>A repo like this can easily become rich internally but invisible externally. The <code>discord_persona_sender</code> subsystem solves that by broadcasting structured posts:</p>
+      <ul>
+      <li><code>LOG</code>: what happened</li>
+      <li><code>LEARN</code>: what the system inferred</li>
+      <li><code>NEXT</code>: what to do next</li>
+      </ul>
+      <p>This makes the repo useful across sessions and beyond the terminal itself.</p>
+      <h3 id="communication-loop">Communication loop</h3>
+      <div class="mermaid">flowchart LR
+          A[Ledger + market observations] --&gt; B[Persona message builder]
+          B --&gt; C[LOG]
+          B --&gt; D[LEARN]
+          B --&gt; E[NEXT]
+          C --&gt; F[Discord webhook]
+          D --&gt; F
+          E --&gt; F
+          F --&gt; G[discord_publish_history.jsonl]
+      </div>
+      <h3 id="deeper-significance">Deeper significance</h3>
+      <p>This is not just notification plumbing. It is a memory-formation protocol. The project is teaching itself to say:</p>
+      <ul>
+      <li>what changed</li>
+      <li>what that means</li>
+      <li>what action follows</li>
+      </ul>
+      <p>That is the seed of a real coaching loop.</p>
+      <h2 id="workflow-6-llm-build-intelligence-with-auditability">Workflow 6: LLM Build Intelligence With Auditability</h2>
+      <p><code>openai_build_intel_card.py</code> adds a model-assisted narrative and planning layer, but does so with better discipline than a one-off API call.</p>
+      <h3 id="what-is-already-implemented">What is already implemented</h3>
+      <ul>
+      <li>deterministic snapshot loading</li>
+      <li>versioned prompts</li>
+      <li>JSON-schema constrained outputs</li>
+      <li>token budgeting</li>
+      <li>local artifact persistence</li>
+      <li>observability hooks</li>
+      <li>Discord posting support</li>
+      </ul>
+      <h3 id="build-intel-pipeline">Build-intel pipeline</h3>
+      <div class="mermaid">sequenceDiagram
+          participant S as Snapshot JSON
+          participant B as build_intel_card.py
+          participant O as OpenAI Responses API
+          participant A as Artifact store
+          participant V as Observability viewer
+      
+          S-&gt;&gt;B: structured character + pricing data
+          B-&gt;&gt;B: summarize build signals
+          B-&gt;&gt;O: constrained JSON request
+          O--&gt;&gt;B: model card output
+          B-&gt;&gt;A: persist prompt, output, token budget, metadata
+          A-&gt;&gt;V: inspectable run history
+      </div>
+      <h3 id="why-this-matters_2">Why this matters</h3>
+      <p>The impressive part is not simply "the repo uses an LLM." The impressive part is that it tries to make LLM outputs replayable, inspectable, and bounded. That is exactly the right instinct for a serious assistant workflow.</p>
+      <h2 id="empirical-character-evidence">Empirical Character Evidence</h2>
+      <p>The repo already contains multiple character case studies.</p>
+      <h3 id="character-inventory">Character inventory</h3>
+      <table>
+      <thead>
+      <tr>
+      <th>Character</th>
+      <th>Status visible in ledger</th>
+      <th>Notable evidence</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+      <td><code>CollabWitch_Codex</code></td>
+      <td>historical progression tracked</td>
+      <td>early campaign to stronger Elementalist state with large gear-driven stat increases</td>
+      </tr>
+      <tr>
+      <td><code>JungFub</code></td>
+      <td>market + PoB tracked</td>
+      <td>113 chaos known value, 47% priced coverage, archived snapshot history</td>
+      </tr>
+      <tr>
+      <td><code>JUNGFUBTOO</code></td>
+      <td>high-value market case</td>
+      <td>Headhunter-centered state with 6954.2 chaos known value</td>
+      </tr>
+      <tr>
+      <td><code>PhysicalDamage</code></td>
+      <td>active default scaffold</td>
+      <td>early progression note preserved; awaiting fresh stat-watch refresh</td>
+      </tr>
+      </tbody>
+      </table>
+      <h3 id="example-of-progression-memory-already-achieved">Example of progression memory already achieved</h3>
+      <p><code>docs/session-2026-02-21-level1-to-act2.md</code> shows a full narrative from beach baseline to Act II village with measured stat deltas at each checkpoint. This is important because it proves the project can already tell a progression story in terms of:</p>
+      <ul>
+      <li>equipment transitions</li>
+      <li>survivability changes</li>
+      <li>damage changes</li>
+      <li>milestone checkpoints</li>
+      </ul>
+      <p>This is already far more useful than a static gear dump.</p>
+      <h2 id="economic-evidence">Economic Evidence</h2>
+      <p>The ledgers show three qualitatively different economic situations:</p>
+      <div class="mermaid">xychart-beta
+          title &quot;Known Market Value by Character (Latest Ledger Snapshot)&quot;
+          x-axis [&quot;CollabWitch_Codex&quot;, &quot;JungFub&quot;, &quot;JUNGFUBTOO&quot;]
+          y-axis &quot;Chaos&quot; 0 --&gt; 7200
+          bar [0, 113, 6954.2]
+      </div>
+      <h3 id="interpretation_1">Interpretation</h3>
+      <ul>
+      <li><code>CollabWitch_Codex</code> demonstrates the low-liquidity early progression case</li>
+      <li><code>JungFub</code> demonstrates a modestly capitalized progression state</li>
+      <li><code>JUNGFUBTOO</code> demonstrates a high-value inventory where market awareness materially changes decisions</li>
+      </ul>
+      <p>This spread is healthy for the repo because it exercises the same workflows against very different account states.</p>
+      <h2 id="temporal-intelligence-and-reproducibility">Temporal Intelligence and Reproducibility</h2>
+      <p>One of the strongest qualities in the current implementation is temporal discipline.</p>
+      <h3 id="evidence-of-temporal-thinking">Evidence of temporal thinking</h3>
+      <ul>
+      <li>JSONL append-only logs</li>
+      <li>archived PoB snapshot artifacts</li>
+      <li>milestones sorted by timestamp</li>
+      <li>stale snapshot blocking for trade advice</li>
+      <li>token-usage ledgers for model calls</li>
+      <li>build-intel artifacts stored by timestamp</li>
+      </ul>
+      <h3 id="temporal-data-architecture">Temporal data architecture</h3>
+      <div class="mermaid">flowchart TD
+          A[New observation] --&gt; B[Latest state files updated]
+          A --&gt; C[Append-only history updated]
+          A --&gt; D[Immutable archive artifact saved]
+          B --&gt; E[Fast current-state access]
+          C --&gt; F[Historical sequence analysis]
+          D --&gt; G[Reproducibility and audit]
+      </div>
+      <p>This is exactly the right shape for a system that wants to evolve into a "living organism" around character data.</p>
+      <h2 id="observability-and-meta-operations">Observability and Meta-Operations</h2>
+      <p>The project is not only instrumenting the game-facing workflows; it is beginning to instrument itself.</p>
+      <h3 id="present-observability-layers">Present observability layers</h3>
+      <ul>
+      <li><code>logs/dspy_observability.jsonl</code></li>
+      <li><code>logs/openai_token_usage.jsonl</code></li>
+      <li><code>logs/build_intel_runs/*.json</code></li>
+      <li><code>observability/</code> package</li>
+      <li><code>observability_viewer.py</code></li>
+      </ul>
+      <h3 id="implication">Implication</h3>
+      <p>This means the repo has started to care about second-order questions:</p>
+      <ul>
+      <li>What did the model see?</li>
+      <li>What did it output?</li>
+      <li>How many tokens did it spend?</li>
+      <li>Can we inspect a run after the fact?</li>
+      </ul>
+      <p>That is a major maturity signal.</p>
+      <h2 id="design-patterns-already-emerging">Design Patterns Already Emerging</h2>
+      <p>Several repo-wide patterns have clearly emerged.</p>
+      <h3 id="1-character-scoped-persistence">1. Character-scoped persistence</h3>
+      <p>State is not global in the abstract. It is anchored to a specific character slug.</p>
+      <h3 id="2-latest-plus-history">2. Latest plus history</h3>
+      <p>The repo uses a practical dual model:</p>
+      <ul>
+      <li>latest files for operational simplicity</li>
+      <li>append-only or archived records for history and trust</li>
+      </ul>
+      <h3 id="3-truth-layering">3. Truth layering</h3>
+      <p>Different truths come from different sources:</p>
+      <ul>
+      <li>live API truth</li>
+      <li>PoB mechanical truth</li>
+      <li>market truth</li>
+      <li>model-assisted interpretive truth</li>
+      </ul>
+      <p>The repository mostly keeps these layers distinguishable, which is good architecture.</p>
+      <h3 id="4-action-orientation">4. Action orientation</h3>
+      <p>Outputs usually terminate in next-step guidance rather than stopping at description.</p>
+      <h3 id="5-auditability-over-vibes">5. Auditability over vibes</h3>
+      <p>Artifacts and logs are increasingly first-class outputs, not side effects.</p>
+      <h2 id="known-gaps-and-friction">Known Gaps and Friction</h2>
+      <p>The repo is promising, but the current state also reveals a few structural tensions.</p>
+      <h3 id="root-level-congestion">Root-level congestion</h3>
+      <p>Too many operational scripts currently live at the top level, making the repo feel more chaotic than it actually is.</p>
+      <h3 id="naming-redundancy">Naming redundancy</h3>
+      <p>There are unnecessary <code>poe</code>/<code>PoE</code> prefixes in places where folder context could carry the domain meaning more cleanly.</p>
+      <h3 id="mixed-ownership-of-concepts">Mixed ownership of concepts</h3>
+      <p>The repo currently mixes:</p>
+      <ul>
+      <li>apps</li>
+      <li>libraries</li>
+      <li>datasets</li>
+      <li>logs</li>
+      <li>vendored dependencies</li>
+      </ul>
+      <p>at the same visual depth.</p>
+      <h3 id="partial-subsystem-isolation">Partial subsystem isolation</h3>
+      <p><code>live_api</code>, <code>discord_persona_sender</code>, and <code>observability</code> are recognizable subsystems but are not yet presented as such in the directory structure.</p>
+      <p>These are organizational problems, not conceptual failures. In fact, they mostly exist because the conceptual model has grown faster than the file layout.</p>
+      <h2 id="what-has-been-achieved-in-plain-terms">What Has Been Achieved, In Plain Terms</h2>
+      <p>The simplest honest summary is this:</p>
+      <ol>
+      <li>The repo can identify and refresh a real player character from live PoE endpoints.</li>
+      <li>It can convert that character into mechanically meaningful PoB-backed stats.</li>
+      <li>It can persist those results as durable per-character memory.</li>
+      <li>It can enrich the character with market valuation.</li>
+      <li>It can generate actionable next moves and publish them outward.</li>
+      <li>It can query the trade market using guardrails informed by character freshness.</li>
+      <li>It can ask an LLM for a build card while keeping artifacts and observability around that call.</li>
+      </ol>
+      <p>That is already the skeleton of a real product.</p>
+      <h2 id="strategic-interpretation">Strategic Interpretation</h2>
+      <p>The temporary objective in <code>AGENTS.md</code> says the repo should become an ecosystem or living organism around character data, and that the character is a report card of user mastery.</p>
+      <p>The current codebase already supports that trajectory more than it may appear at first glance.</p>
+      <p>Why:</p>
+      <ul>
+      <li>the character has continuity</li>
+      <li>the character has evidence</li>
+      <li>the character has observations</li>
+      <li>the character has economic context</li>
+      <li>the character can trigger next actions</li>
+      <li>the system keeps receipts</li>
+      </ul>
+      <p>This means the next stage is not to invent the idea. The next stage is to reveal the idea more clearly through organization and stronger interfaces.</p>
+      <h2 id="reorganization-implications">Reorganization Implications</h2>
+      <p>This report directly informs the upcoming cleanup.</p>
+      <h3 id="the-reorg-should-preserve-these-first-class-domains">The reorg should preserve these first-class domains</h3>
+      <ul>
+      <li>character operations</li>
+      <li>trade operations</li>
+      <li>auth</li>
+      <li>reporting and publication</li>
+      <li>observability</li>
+      <li>character data</li>
+      <li>generated artifacts</li>
+      <li>embedded upstream tooling</li>
+      </ul>
+      <h3 id="the-reorg-should-not-hide-these-first-class-domains">The reorg should not hide these first-class domains</h3>
+      <ul>
+      <li><code>defaults.env</code></li>
+      <li><code>characters/</code></li>
+      <li><code>logs/</code></li>
+      <li><code>skills/</code></li>
+      </ul>
+      <p>These are not clutter. They are part of the operating model.</p>
+      <h2 id="conclusion">Conclusion</h2>
+      <p>This repository has already accomplished something more meaningful than "automation for Path of Exile." It has built the early form of a character intelligence stack.</p>
+      <p>The main success is not that it can fetch data, post to Discord, or generate a card. The main success is that it has started to treat a game character as an evolving, evidence-backed object around which memory, valuation, coaching, and decision support can accumulate.</p>
+      <p>The codebase is now at an inflection point:</p>
+      <ul>
+      <li>conceptually, it already knows what it is</li>
+      <li>structurally, it does not yet look like what it is</li>
+      </ul>
+      <p>That mismatch is good news. It means the reorganization work is not a search for direction. It is a clarity pass on a direction that is already present.</p>
+      <h2 id="appendix-a-current-top-level-script-surface">Appendix A: Current Top-Level Script Surface</h2>
+      <table>
+      <thead>
+      <tr>
+      <th>Current file</th>
+      <th>Main role</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+      <td><code>character_ledger.py</code></td>
+      <td>persistent character memory</td>
+      </tr>
+      <tr>
+      <td><code>poe_character_sync.py</code></td>
+      <td>live API character intake</td>
+      </tr>
+      <tr>
+      <td><code>poe_stat_watch.py</code></td>
+      <td>PoB-backed snapshot and delta engine</td>
+      </tr>
+      <tr>
+      <td><code>poe_market_pipeline.py</code></td>
+      <td>valuation + persona generation</td>
+      </tr>
+      <tr>
+      <td><code>trade_api.py</code></td>
+      <td>shared trade API client</td>
+      </tr>
+      <tr>
+      <td><code>weighted_trade_search.py</code></td>
+      <td>weighted trade recommendation execution</td>
+      </tr>
+      <tr>
+      <td><code>poe_oauth.py</code></td>
+      <td>OAuth helper layer</td>
+      </tr>
+      <tr>
+      <td><code>poe_oauth_login.py</code></td>
+      <td>OAuth login bootstrap</td>
+      </tr>
+      <tr>
+      <td><code>openai_build_intel_card.py</code></td>
+      <td>LLM build-card generation</td>
+      </tr>
+      <tr>
+      <td><code>post_build_intel_card.py</code></td>
+      <td>build signal extraction and posting</td>
+      </tr>
+      <tr>
+      <td><code>observability_viewer.py</code></td>
+      <td>local run-inspection UI</td>
+      </tr>
+      <tr>
+      <td><code>ledger_snapshot_viz.py</code></td>
+      <td>ledger visualization support</td>
+      </tr>
+      <tr>
+      <td><code>trade_rate_limit_probe.py</code></td>
+      <td>trade telemetry probing</td>
+      </tr>
+      </tbody>
+      </table>
+      <h2 id="appendix-b-character-centered-data-loop">Appendix B: Character-Centered Data Loop</h2>
+      <div class="mermaid">mindmap
+        root((Character))
+          Identity
+            account
+            realm
+            league
+            class
+            level
+          Mechanics
+            PoB panel stats
+            deltas
+            inventory counts
+            equipped changes
+          Economy
+            priced items
+            known value
+            top holdings
+          Memory
+            observations
+            milestones
+            journals
+          Action
+            trade queries
+            Discord posts
+            build cards
+      </div>
+      <h2 id="appendix-c-immediate-operational-reminder">Appendix C: Immediate Operational Reminder</h2>
+      <p>The active repo default remains:</p>
+      <pre><code class="language-bash">DEFAULT_ACCOUNT=&quot;tinycrops#3233&quot;
+      DEFAULT_CHARACTER=&quot;PhysicalDamage&quot;
+      DEFAULT_LEAGUE=&quot;Mirage&quot;
+      DEFAULT_REALM=&quot;pc&quot;
+      DEFAULT_TRADE_MODE=&quot;securable&quot;
+      </code></pre>
+      <p>Before progression-sensitive recommendations for <code>PhysicalDamage</code>, refresh the character with <code>poe_stat_watch.py</code> so the ledger’s <code>latest_snapshot</code> is no longer stale or empty.</p>
+    </main>
+    <div class="footer">
+      Rendered from Markdown for local network viewing.
+    </div>
+  </div>
+</body>
+</html>
