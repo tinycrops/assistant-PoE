@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Codex Repair Loop Research Report</title>
+  <meta name="color-scheme" content="dark light" />
+  <style>
+    :root {
+      --bg: #f4efe4;
+      --paper: #fffaf1;
+      --ink: #1d1a17;
+      --muted: #6b6258;
+      --accent: #914d1f;
+      --line: #d8c8b6;
+      --code-bg: #2a241f;
+      --code-ink: #f6ead9;
+      --quote: #f1e4d4;
+      --shadow: 0 24px 80px rgba(73, 42, 19, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(211, 149, 88, 0.16), transparent 28%),
+        radial-gradient(circle at top right, rgba(129, 65, 27, 0.12), transparent 24%),
+        linear-gradient(180deg, #efe5d6 0%, #f7f2ea 24%, #f3ecdf 100%);
+      font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+      line-height: 1.6;
+    }
+
+    .shell {
+      width: min(1120px, calc(100vw - 32px));
+      margin: 24px auto 48px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 40px 42px 28px;
+      border: 1px solid rgba(145, 77, 31, 0.18);
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at 85% 15%, rgba(145, 77, 31, 0.16), transparent 18%),
+        linear-gradient(140deg, rgba(255, 250, 241, 0.96), rgba(246, 236, 220, 0.96));
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--accent);
+      font-family: "Trebuchet MS", "Gill Sans", sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2.3rem, 4vw, 4.2rem);
+      line-height: 0.98;
+      max-width: 12ch;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 70ch;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .paper {
+      margin-top: 22px;
+      padding: 34px 42px 48px;
+      border: 1px solid rgba(145, 77, 31, 0.14);
+      border-radius: 24px;
+      background: color-mix(in srgb, var(--paper) 94%, white 6%);
+      box-shadow: var(--shadow);
+    }
+
+    h1, h2, h3 {
+      color: #251d16;
+      line-height: 1.14;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin: 0 0 18px;
+    }
+
+    h2 {
+      margin-top: 2.4rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--line);
+      font-size: 1.65rem;
+    }
+
+    h3 {
+      margin-top: 1.6rem;
+      font-size: 1.18rem;
+    }
+
+    p, li { font-size: 1.04rem; }
+
+    a { color: var(--accent); }
+
+    strong { color: #2b2016; }
+
+    blockquote {
+      margin: 1.4rem 0;
+      padding: 0.9rem 1.1rem;
+      border-left: 4px solid var(--accent);
+      background: var(--quote);
+      border-radius: 0 12px 12px 0;
+    }
+
+    code {
+      padding: 0.15rem 0.35rem;
+      border-radius: 6px;
+      background: rgba(145, 77, 31, 0.09);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.92em;
+    }
+
+    .footer {
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      text-align: center;
+    }
+
+    @media (max-width: 820px) {
+      .shell {
+        width: min(100vw - 20px, 100%);
+        margin: 10px auto 28px;
+      }
+
+      .hero,
+      .paper {
+        padding: 22px 18px 26px;
+        border-radius: 20px;
+      }
+
+      .hero h1 { max-width: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <section class="hero">
+      <p class="eyebrow">Assistant-PoE Research Report</p>
+      <h1>Codex Repair Loop Research Report</h1>
+      <p>
+        A concise report on the most important finding from this phase:
+        the current system works as a supervised repair environment, and the best research substrate
+        is the corpus of user corrections and assistant repairs already living in <code>~/.codex</code>.
+      </p>
+    </section>
+
+    <article class="paper">
+      <h1>Why the Current System Works, When It Works</h1>
+
+      <p><strong>Date:</strong> 2026-03-23<br />
+      <strong>Repository:</strong> <code>assistant-PoE</code><br />
+      <strong>Primary runtime:</strong> Codex conversations in <code>~/.codex</code></p>
+
+      <h2>Abstract</h2>
+      <p>This report documents a practical shift in how we should think about the current system.</p>
+      <p>The important discovery is not that the assistant is broadly reliable. It is that the system already contains a valuable learning loop:</p>
+      <ol>
+        <li>the user brings a real problem,</li>
+        <li>Codex makes an attempt,</li>
+        <li>Codex gets something wrong,</li>
+        <li>the user names the mistake,</li>
+        <li>Codex repairs the approach,</li>
+        <li>the result sometimes becomes genuinely useful.</li>
+      </ol>
+      <p>That loop is the real product substrate right now. It is also the best research substrate we currently have.</p>
+      <p>Instead of treating the conversation history in <code>~/.codex</code> as messy residue, we should treat it as a corpus of failure, correction, and repair.</p>
+
+      <h2>Main Claim</h2>
+      <p>The current system should be understood as a <strong>supervised repair environment</strong>, not an autonomous application.</p>
+      <p>That means:</p>
+      <ul>
+        <li>the user's corrective feedback is first-class data,</li>
+        <li>the assistant's mistakes are not just failures,</li>
+        <li>and the most valuable training signal is the transition from bad attempt to repaired method.</li>
+      </ul>
+
+      <h2>Evidence Base</h2>
+      <p>This conclusion is grounded in direct inspection of:</p>
+      <ul>
+        <li><code>/home/ath/.codex/history.jsonl</code></li>
+        <li><code>/home/ath/.codex/sessions/...</code></li>
+        <li>the current <code>assistant-PoE</code> research artifacts</li>
+        <li>the first seed repair dataset now added under <code>research/codex_repair_dataset/</code></li>
+      </ul>
+
+      <h2>What We Found</h2>
+      <h3>1. <code>~/.codex</code> already contains explicit correction signals</h3>
+      <p>The history index contains clear user interventions like:</p>
+      <ul>
+        <li><code>you didn't check the builds that are attached to the build links you sent me</code></li>
+        <li><code>you doubled down on your mistakes from step3</code></li>
+        <li><code>the solution you made is making my computer hum</code></li>
+      </ul>
+      <p>These are not vague dislikes. They are precise labels for assistant failure.</p>
+
+      <h3>2. Canonical session logs preserve the full repair sequence</h3>
+      <p>The rollout transcripts make it possible to recover:</p>
+      <ul>
+        <li>the original request,</li>
+        <li>the assistant's mistaken method,</li>
+        <li>the user's correction,</li>
+        <li>and the repaired answer.</li>
+      </ul>
+      <p>That is enough to build explicit repair episodes instead of vague chat summaries.</p>
+
+      <h3>3. The fractured <code>% increased maximum Mana</code> jewel session is a quintessential artifact</h3>
+      <p>Canonical transcript:</p>
+      <ul>
+        <li><a href="./codex-conversation-repair-dataset-plan-2026-03-23.md">the March 22, 2026 mana-jewel session analysis</a></li>
+      </ul>
+      <p>Why it matters:</p>
+      <ul>
+        <li>the user asked a practical market question about a fractured mana jewel base,</li>
+        <li>the first answer overfit to aggregate poe.ninja slices,</li>
+        <li>the user correctly pointed out that the linked builds did not actually validate the claim,</li>
+        <li>the repair switched to inspecting attached build data directly.</li>
+      </ul>
+      <p>This is exactly the pattern we want to capture and learn from.</p>
+
+      <h2>Research Artifacts Added</h2>
+      <h3>Repair dataset scaffold</h3>
+      <p>New subtree:</p>
+      <ul>
+        <li><code>research/codex_repair_dataset/README.md</code></li>
+        <li><code>research/codex_repair_dataset/repair_episode_schema.json</code></li>
+        <li><code>research/codex_repair_dataset/mistake_taxonomy.json</code></li>
+        <li><code>research/codex_repair_dataset/extract_from_history.py</code></li>
+        <li><code>research/codex_repair_dataset/extract_from_sessions.py</code></li>
+        <li><code>research/codex_repair_dataset/projected/repair_episodes.jsonl</code></li>
+      </ul>
+      <p>The first seed episode is the fractured mana jewel case.</p>
+
+      <h3>Semantic memory upgrade</h3>
+      <p>We also rebuilt the semantic memory index and fixed the retrieval path so <code>~/.codex</code> can be searched by meaning instead of only keywords.</p>
+      <p>Operational outcome:</p>
+      <ul>
+        <li>the index now rebuilds against <code>ath-ms-7a72</code> for Ollama embedding inference,</li>
+        <li>and the mana-jewel repair artifact is retrievable semantically.</li>
+      </ul>
+
+      <h2>Why This Matters</h2>
+      <p>This gives us a more honest and more useful direction for experimental modeling.</p>
+      <p>We do not need to pretend the assistant is close to full autonomy. We already have something more concrete:</p>
+      <ul>
+        <li>a live loop,</li>
+        <li>real correction data,</li>
+        <li>repeated mistake classes,</li>
+        <li>and a growing corpus of repaired episodes.</li>
+      </ul>
+      <p>That is enough to start training narrow helpers for:</p>
+      <ul>
+        <li>correction detection,</li>
+        <li>mistake classification,</li>
+        <li>repair planning,</li>
+        <li>and acceptance prediction.</li>
+      </ul>
+
+      <h2>Practical Reframing</h2>
+      <p>The right near-term goal is not:</p>
+      <blockquote>build a fully autonomous assistant</blockquote>
+      <p>The right near-term goal is:</p>
+      <blockquote>reduce repeated mistake classes inside the current repair loop</blockquote>
+      <p>That is measurable. It also fits the current reality of the product much better.</p>
+
+      <h2>Next Steps</h2>
+      <ol>
+        <li>Continue promoting high-value Codex sessions into repair episodes.</li>
+        <li>Hand-label the first 25-50 episodes with the small mistake taxonomy.</li>
+        <li>Use the semantic memory index to retrieve related past repair cases by meaning.</li>
+        <li>Train small models in <code>~/fontemon</code> only on narrow repair tasks first.</li>
+        <li>Measure success by reduced corrective turns and lower recurrence of the same mistake class.</li>
+      </ol>
+
+      <h2>Conclusion</h2>
+      <p>The current system is not broken because it needs a better story. It needs better use of the story it is already generating.</p>
+      <p>Every time the user says:</p>
+      <ul>
+        <li><code>that's wrong</code></li>
+        <li><code>that's not what I meant</code></li>
+        <li><code>you missed the method</code></li>
+        <li><code>fix it</code></li>
+      </ul>
+      <p>the system is being handed one of the highest-value supervision signals available to it.</p>
+      <p>This report marks the point where we stop treating that signal as noise and start treating it as the foundation of the next phase of research.</p>
+    </article>
+
+    <div class="footer">
+      Published from <code>assistant-PoE/docs/research/</code> for GitHub Pages.
+    </div>
+  </div>
+</body>
+</html>
